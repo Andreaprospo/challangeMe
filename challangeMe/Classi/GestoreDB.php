@@ -25,6 +25,24 @@
             return $instance;
         }
 
+        function getUtente($identificativo)
+        {
+            if(str_contains($identificativo,"@"))
+                $stmt = $this->db->prepare("SELECT * FROM utenti WHERE mail = ?");
+            else
+                $stmt = $this->db->prepare("SELECT * FROM utenti WHERE username = ?");
+
+            $stmt->bind_param("s", $identificativo);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc(); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }
+        
+
         function login($identificativo, $password)
         {
             $password = md5($password);
@@ -102,6 +120,64 @@
             }
         }
 
+        function getAllNuoveSfide($username)
+        {
+            $stmt = $this->db->prepare("SELECT *
+                    FROM sfide
+                    WHERE id NOT IN (
+                        SELECT idSfida
+                        FROM accettare_sfide
+                        WHERE usernameUtente = ?
+                    )
+                    AND TIMESTAMP(dataFine, oraFine) > NOW();
+            ");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_all(MYSQLI_ASSOC); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }
 
+        function accettaSfida($username, $idSfida)
+        {
+            $stmt = $this->db->prepare("INSERT INTO accettare_sfide (usernameUtente, idSfida) VALUES (?, ?)");
+            $stmt->bind_param("si", $username, $idSfida);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+
+        function getSfida($idSfida)
+        {
+            $stmt = $this->db->prepare("SELECT * FROM sfide WHERE id = ?");
+            $stmt->bind_param("i", $idSfida);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc(); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }
+
+        function getSfideAccettate($username)
+        {
+            $stmt = $this->db->prepare("SELECT * FROM sfide
+                    JOIN accettare_sfide ON sfide.id = accettare_sfide.idSfida
+                    WHERE accettare_sfide.usernameUtente = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_all(MYSQLI_ASSOC); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }
     }
 ?>
