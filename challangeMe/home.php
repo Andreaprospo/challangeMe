@@ -14,7 +14,13 @@
             <div id = "divCorpo">
                 <div id="divSfideAccettate"></div>
                 <div id="divNuoveSfide"></div>
-                <div id="divSuggeritiSeguiti"></div>
+                <div id="divSuggeritiSeguiti">
+                    <div id = "divBottoni">
+                        <button onclick="stampaSeguiti()">Utenti seguiti</button>
+                        <button onclick="stampaAllUtenti()">Utenti suggeriti</button>
+                    </div>
+                    <div id = "divUtenti"></div>
+                </div>
             </div>
             <?php
                 require_once "footer.php";
@@ -29,6 +35,109 @@
         stampaNuoveSfide();
         stampaSfideAccettate();
     });
+
+    async function stampaAllUtenti()
+    {
+        let url = "ajax/getAllUtenti.php";
+        console.log(url);
+        let response = await fetch(url);
+        let txt = await response.text();
+        console.log(txt);
+        let data = JSON.parse(txt);
+        let divUtenti = document.querySelector("#divUtenti");
+        divUtenti.innerHTML = ""; // Pulisce il contenuto precedente
+        if(data.status == "OK")
+        {
+            for(let i = 0; i < data.data.length; i++)
+            {
+                let div = document.createElement("div");
+                let button = document.createElement("button");
+                button.innerHTML = "Segui";
+                button.value = data.data[i].username;
+                button.addEventListener("click", function(event){
+                        segui(event, true);
+                });
+                div.innerHTML += stampaUtente(data.data[i]);
+                div.appendChild(button);
+                divUtenti.appendChild(div);
+            }   
+        }
+        else
+        {
+            let div = document.createElement("div");
+            div.innerHTML = "Nessun utente trovato";
+            divUtenti.appendChild(div);
+        }
+    }
+
+    async function stampaSeguiti()
+    {
+        let url = "ajax/getAllSeguiti.php";
+        console.log(url);
+        let response = await fetch(url);
+        let txt = await response.text();
+        console.log(txt);
+        let data = JSON.parse(txt);
+        let divUtenti = document.querySelector("#divUtenti");
+        divUtenti.innerHTML = ""; // Pulisce il contenuto precedente
+        if(data.status == "OK")
+        {
+            for(let i = 0; i < data.data.length; i++)
+            {
+                let div = document.createElement("div");
+                let button = document.createElement("button");
+                button.innerHTML = "Smetti di seguire";
+                button.value = data.data[i].username;
+                button.addEventListener("click", function(event){
+                        segui(event, false);
+                });
+                div.innerHTML += stampaUtente(data.data[i]);
+                div.appendChild(button);
+                divUtenti.appendChild(div);
+            }   
+        }
+        else
+        {
+            let div = document.createElement("div");
+            div.innerHTML = "Nessun seguito trovato";
+            divUtenti.appendChild(div);
+        }
+    }
+
+    function stampaUtente($data)
+    {
+        return "<span>" + $data["username"] + "</span>";
+    }
+
+    async function segui(event, azione)
+    {
+        //se true allora segui, altriemnti smetti di seguire
+        let url = "ajax/segui.php?username=" + event.target.value + "&azione=" + azione;
+        console.log(url);
+        let response = await fetch(url);
+        let txt = await response.text();
+        console.log(txt);
+        let data = JSON.parse(txt);
+        console.log(txt);
+        if(azione)
+        {
+            stampaAllUtenti(); // Ricarica gli utenti suggeriti
+            alert("Segui " + event.target.value);
+        }
+        else
+        {
+            stampaSeguiti(); // Ricarica gli utenti seguiti
+            alert("Smetti di seguire " + event.target.value);
+        }
+
+    }
+
+    function stampaSfida($data)
+    {
+        let span = document.createElement("div");
+        span.innerHTML = $data["descrizione"] + " --- " + $data["dataInizio"] + " --- " + $data["oraInizio"];
+        return span;
+    }
 
     async function stampaNuoveSfide()
     {
@@ -51,7 +160,7 @@
                 button.addEventListener("click", function(event){
                         accettaSfida(event);
                 });
-                div.innerHTML += stampaSfida(data.data[i]);
+                div.appendChild(stampaSfida(data.data[i]));
                 div.appendChild(button);
                 divSfideAccettate.appendChild(div);
             }   
@@ -73,14 +182,31 @@
         console.log(txt);
         let data = JSON.parse(txt);
         console.log(txt);
-        let divSfideAccettate = document.querySelector("#divSfideAccettate");
-        divSfideAccettate.innerHTML += stampaSfida(data.data); // Pulisce il contenuto precedente
         stampaNuoveSfide(); // Ricarica le nuove sfide
+        stampaSfideAccettate();
     }
 
-    function stampaSfida($data)
+    function stampaSfidaAccettata($data)
     {
-        return "<span>" + $data["descrizione"] + " --- " + $data["dataFine"] + " --- " + $data["oraFine"] + "</span>";
+        let span = document.createElement("span");
+        let buttonFinish = document.createElement("button");
+        buttonFinish.innerHTML = "Sfida completata";
+        buttonFinish.value = $data["id"];
+        buttonFinish.addEventListener("click", function(event){
+            completaSfida(event);
+        });
+
+        let buttonElimina = document.createElement("button");
+        buttonElimina.innerHTML = "Elimina sfida";
+        buttonElimina.value = $data["id"];
+        buttonElimina.addEventListener("click", function(event){
+            eliminaSfida(event);
+        });
+
+        span.innerHTML = "<span>" + $data["descrizione"] + " --- " + $data["dataFine"] + " --- " + $data["oraFine"] + "</span>";
+        span.appendChild(buttonFinish);
+        span.appendChild(buttonElimina);
+        return span;
     }
 
     async function stampaSfideAccettate()
@@ -97,24 +223,8 @@
         {
             for(let i = 0; i < data.data.length; i++)
             {
-                let div = document.createElement("div");
-
-                let buttonCompleta = document.createElement("button");
-                buttonCompleta.innerHTML = "Sfida completata";
-                buttonCompleta.value = data.data[i].id;
-                buttonCompleta.addEventListener("click", function(event){
-                    completaSfida(event);
-                });
-                let buttonElimina = document.createElement("button"); 
-                buttonElimina.innerHTML = "Elimina sfida";
-                buttonElimina.value = data.data[i].id;
-                buttonElimina.addEventListener("click", function(event){
-                    eliminaSfida(event);
-                });
-                
-                div.innerHTML += stampaSfida(data.data[i]);
-                div.appendChild(buttonCompleta);
-                div.appendChild(buttonElimina);
+                let div = document.createElement("div");                
+                div.appendChild(stampaSfidaAccettata(data.data[i]));
                 divSfideAccettate.appendChild(div);
             }   
         }
@@ -138,11 +248,11 @@
         let data = JSON.parse(txt);
         console.log(txt);
         let divSfideAccettate = document.querySelector("#divSfideAccettate");
-        divSfideAccettate.innerHTML += stampaSfida(data.data); // Pulisce il contenuto precedente
+        divSfideAccettate.appendChild(stampaSfida(data.data)); // Pulisce il contenuto precedente
         stampaSfideAccettate(); // Ricarica le nuove sfide
     }
 
-    async function completaSfida(event)
+    async function eliminaSfida(event)
     {
         let url = "ajax/eliminaSfida.php?idSfida=" + idSfida;
         console.log(url);
@@ -154,7 +264,7 @@
         let data = JSON.parse(txt);
         console.log(txt);
         let divSfideAccettate = document.querySelector("#divSfideAccettate");
-        divSfideAccettate.innerHTML += stampaSfida(data.data); // Pulisce il contenuto precedente
+        divSfideAccettate.appendChild(stampaSfida(data.data)); // Pulisce il contenuto precedente
         stampaSfideAccettate(); // Ricarica le nuove sfide
     }
 </script>

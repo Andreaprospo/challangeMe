@@ -179,5 +179,62 @@
                 return null; // Login failed
             }
         }
+
+        function getAllSeguiti($username)
+        {
+            $stmt = $this->db->prepare(query: "SELECT usernameSeguito username FROM seguire
+                    WHERE usernameSeguente = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_all(MYSQLI_ASSOC); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }   
+
+        function getAllUtentiNonSeguiti($username)
+        {
+            $stmt = $this->db->prepare("SELECT *
+            FROM utenti
+            WHERE username != ?
+            AND username NOT IN (
+                SELECT usernameSeguito
+                FROM seguire
+                WHERE usernameSeguente = ?
+            );
+            ");
+            $stmt->bind_param("ss", $username, $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_all(MYSQLI_ASSOC); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }
+
+        function segui($usernameSeguito, $usernameSeguente)
+        {
+            $stmt = $this->db->prepare("INSERT INTO seguire (usernameSeguito, usernameSeguente) VALUES (?, ?)");
+            $stmt->bind_param("ss", $usernameSeguito, $usernameSeguente);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+
+        function smettiDiSeguire($usernameSeguito, $usernameSeguente)
+        {
+            $stmt = $this->db->prepare("DELETE FROM seguire WHERE usernameSeguito = ? AND usernameSeguente = ?");
+            $stmt->bind_param("ss", $usernameSeguito, $usernameSeguente);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
     }
 ?>
