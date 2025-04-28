@@ -13,6 +13,7 @@
         print(json_encode($vettoreRitorno));
         return;
     }
+
     if(!isset($_GET["idSfida"]) || empty($_GET["idSfida"]))
     {
         $vettoreRitorno["status"] = "ERR";

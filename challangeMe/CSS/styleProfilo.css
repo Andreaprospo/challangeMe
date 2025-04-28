@@ -1,0 +1,197 @@
+/* Main styles for the profile page */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+#superDiv {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto auto;
+    grid-gap: 20px;
+    grid-template-areas:
+        "foto info"
+        "punteggio punteggio"
+        "sfide sfide"
+        "modifica modifica";
+}
+
+/* Profile picture section */
+#divfoto {
+    grid-area: foto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#divfoto img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #3498db;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#divfoto img:hover {
+    transform: scale(1.05);
+}
+
+/* User information section */
+#divInformazioni {
+    grid-area: info;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#divUsername {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+#divDescrizione {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    background-color: #f1f8fe;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+/* Score section */
+#divPunteggio {
+    grid-area: punteggio;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Challenges section */
+#divSfide {
+    grid-area: sfide;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+#divSfideAccettate, #divSfideCompletate {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#divSfideAccettate h2, #divSfideCompletate h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+#sottoDivSfideAccettate div, #sottoDivSfideCompletate div {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #f1f8fe;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#sottoDivSfideAccettate div:hover, #sottoDivSfideCompletate div:hover {
+    background-color: #e3f2fd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit profile section */
+#divModificaProfilo {
+    grid-area: modifica;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#divModificaProfilo h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+#buttonModifica {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+#buttonModifica:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+}
+
+#buttonModifica:active {
+    transform: translateY(1px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #superDiv {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "foto"
+            "info"
+            "punteggio"
+            "sfide"
+            "modifica";
+    }
+
+    #divSfide {
+        grid-template-columns: 1fr;
+    }
+
+    #divfoto img {
+        width: 150px;
+        height: 150px;
+    }
+
+    #divUsername {
+        font-size: 2rem;
+        text-align: center;
+    }
+}

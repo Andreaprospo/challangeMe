@@ -13,7 +13,13 @@
             </div>
             <div id = "divCorpo">
                 <div id="divSfideAccettate"></div>
-                <div id="divNuoveSfide"></div>
+                <div id="divSfide">
+                    <div id = "divBottoniSfide">
+                        <button onclick="stampaSfideCompletate()">Sfide accettate</button>
+                        <button onclick="stampaNuoveSfide()">Nuove sfide</button>
+                    </div>
+                    <div id = "sottoDivSfide"></div>
+                </div>
                 <div id="divSuggeritiSeguiti">
                     <div id = "divBottoni">
                         <button onclick="stampaSeguiti()">Utenti seguiti</button>
@@ -32,8 +38,8 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function() {
-        stampaNuoveSfide();
         stampaSfideAccettate();
+        stampaAllUtenti();
     });
 
     async function stampaAllUtenti()
@@ -134,9 +140,9 @@
 
     function stampaSfida($data)
     {
-        let span = document.createElement("div");
-        span.innerHTML = $data["descrizione"] + " --- " + $data["dataInizio"] + " --- " + $data["oraInizio"];
-        return span;
+        let div = document.createElement("div");
+        div.innerHTML = $data["descrizione"] + " --- " + $data["dataInizio"] + " --- " + $data["oraInizio"];
+        return div;
     }
 
     async function stampaNuoveSfide()
@@ -147,7 +153,7 @@
         let txt = await response.text();
         console.log(txt);
         let data = JSON.parse(txt);
-        let divSfideAccettate = document.querySelector("#divNuoveSfide");
+        let divSfideAccettate = document.querySelector("#sottoDivSfide");
         divSfideAccettate.innerHTML = ""; // Pulisce il contenuto precedente
         if(data.status == "OK")
         {
@@ -188,7 +194,7 @@
 
     function stampaSfidaAccettata($data)
     {
-        let span = document.createElement("span");
+        let div = document.createElement("div");
         let buttonFinish = document.createElement("button");
         buttonFinish.innerHTML = "Sfida completata";
         buttonFinish.value = $data["id"];
@@ -203,10 +209,10 @@
             eliminaSfida(event);
         });
 
-        span.innerHTML = "<span>" + $data["descrizione"] + " --- " + $data["dataFine"] + " --- " + $data["oraFine"] + "</span>";
-        span.appendChild(buttonFinish);
-        span.appendChild(buttonElimina);
-        return span;
+        div.innerHTML = "<div>" + $data["descrizione"] + " --- " + $data["dataFine"] + " --- " + $data["oraFine"] + "</div>";
+        div.appendChild(buttonFinish);
+        div.appendChild(buttonElimina);
+        return div;
     }
 
     async function stampaSfideAccettate()
@@ -238,33 +244,62 @@
 
     async function completaSfida(event)
     {
-        let url = "ajax/completaSfida.php?idSfida=" + idSfida;
-        console.log(url);
-        return true;
         let idSfida = event.target.value;
+        let url = "ajax/completaSfida.php?idSfida=" + idSfida;
         let response = await fetch(url);
         let txt = await response.text();
         console.log(txt);
         let data = JSON.parse(txt);
         console.log(txt);
-        let divSfideAccettate = document.querySelector("#divSfideAccettate");
-        divSfideAccettate.appendChild(stampaSfida(data.data)); // Pulisce il contenuto precedente
         stampaSfideAccettate(); // Ricarica le nuove sfide
     }
 
     async function eliminaSfida(event)
     {
+
+        let idSfida = event.target.value;
         let url = "ajax/eliminaSfida.php?idSfida=" + idSfida;
         console.log(url);
-        return true;
-        let idSfida = event.target.value;
         let response = await fetch(url);
         let txt = await response.text();
         console.log(txt);
         let data = JSON.parse(txt);
-        console.log(txt);
-        let divSfideAccettate = document.querySelector("#divSfideAccettate");
-        divSfideAccettate.appendChild(stampaSfida(data.data)); // Pulisce il contenuto precedente
         stampaSfideAccettate(); // Ricarica le nuove sfide
+        stampaNuoveSfide(); // Ricarica le nuove sfide
     }
+
+    async function stampaSfideCompletate()
+    {
+        let url = "ajax/getAllSfideCompletate.php";
+        console.log(url);
+        let response = await fetch(url);
+        let txt = await response.text();
+        console.log(txt);
+        let data = JSON.parse(txt);
+        let sottoDivSfide = document.querySelector("#sottoDivSfide");
+        sottoDivSfide.innerHTML = ""; // Pulisce il contenuto precedente
+        if(data.status == "OK")
+        {
+            for(let i = 0; i < data.data.length; i++)
+            {
+                let div = document.createElement("div");                
+                div.appendChild(stampaSfidaCompletata(data.data[i]));
+                sottoDivSfide.appendChild(div);
+            }   
+        }
+        else
+        {
+            let div = document.createElement("div");
+            div.innerHTML = "Nessuna sfida completata";
+            sottoDivSfide.appendChild(div);
+        }
+    }
+
+    function stampaSfidaCompletata($data)
+    {
+        let div = document.createElement("div");
+        div.innerHTML = $data["descrizione"] + " --- " + $data["data"] + " --- " + $data["ora"] + " --- " + $data["dataCompletamento"] + " --- " + $data["oraCompletamento"];
+        return div;
+    }
+
 </script>

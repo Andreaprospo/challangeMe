@@ -6,12 +6,14 @@
     if(!isset($_SESSION))
         session_start();
 
-    if (!isset($_SESSION["utenteCorrente"]))
+    if(!isset($_SESSION["utenteCorrente"]))
     {
         $vettoreRitorno["status"] = "ERR";
+        $vettoreRitorno["msg"] = "Utente non loggato";
         print(json_encode($vettoreRitorno));
         return;
     }
+
     $utenteCorrente = $_SESSION["utenteCorrente"];
     $gestoreDB = GestoreDB::getInstance();   
     $sfideAccettate = $gestoreDB->getAllNuoveSfide($utenteCorrente->getUsername());

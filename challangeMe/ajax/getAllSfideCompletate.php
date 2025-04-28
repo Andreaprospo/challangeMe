@@ -1,8 +1,9 @@
 <?php
+
     require_once "../Classi/Utente.php";
     require_once "../Classi/GestoreDB.php";
+    $vettoreRitorno = null;
 
-    $vettoreRitorno = [];
     if(!isset($_SESSION))
         session_start();
 
@@ -13,14 +14,14 @@
             print(json_encode($vettoreRitorno));
             return;
         }
-        
+
     $utenteCorrente = $_SESSION["utenteCorrente"];
     $gestoreDB = GestoreDB::getInstance();
-    $result = $gestoreDB->getAllSeguiti($utenteCorrente->getUsername());
+    $result = $gestoreDB->getAllSfideCompletate($utenteCorrente->getUsername());
     if($result == null)
     {
         $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Nessun seguito trovato";
+        $vettoreRitorno["msg"] = "Nessuna sfida completata trovata";
         print(json_encode($vettoreRitorno));
         return;
     }

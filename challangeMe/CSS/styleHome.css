@@ -49,7 +49,7 @@ body{
     background-color: green;
 }
 
-#divNuoveSfide
+#divSfide
 {
     width: 40%;
     height: 100%;
@@ -61,4 +61,10 @@ body{
     width: 30%;
     height: 100%;
     background-color: orange;
+}
+
+#sottoDivSfide
+{
+    width: 100%;
+    height: 100%;
 }
