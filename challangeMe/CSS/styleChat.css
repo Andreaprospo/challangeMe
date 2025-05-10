@@ -1,0 +1,345 @@
+/* Reset di base e font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fb;
+    min-height: 100vh;
+    display: flex;
+    color: #333;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 60px; /* Spazio per il footer */
+}
+
+/* Layout principale */
+#divGruppi {
+    width: 280px;
+    background-color: #ffffff;
+    border-right: 1px solid #e1e4e8;
+    overflow-y: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    height: calc(100vh - 60px); /* Sottrai lo spazio del footer */
+}
+
+#divChat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* Sottrai lo spazio del footer */
+    min-width: 0; /* Risolve problemi di overflow nei flexbox */
+}
+
+#divInviti {
+    width: 280px;
+    background-color: #ffffff;
+    border-left: 1px solid #e1e4e8;
+    overflow-y: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    height: calc(100vh - 60px); /* Sottrai lo spazio del footer */
+}
+
+/* Stile dei gruppi */
+.divGruppo {
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #f5f7fb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.divGruppo:hover {
+    background-color: #eef2ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.divGruppo h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.divGruppo.active {
+    background-color: #4f46e5;
+}
+
+.divGruppo.active h2 {
+    color: white;
+}
+
+/* Area messaggi */
+#divMessaggi {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+}
+
+/* Stile dei messaggi */
+#divMessaggi > div {
+    max-width: 75%;
+    padding: 12px 15px;
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    align-self: flex-start;
+    background-color: #f5f7fb;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.divMittente {
+    margin-bottom: 5px;
+}
+
+.divMittente p {
+    font-weight: 600;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+.divTesto p {
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Input area */
+#divInterfaccia {
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #e1e4e8;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#inputMessaggio {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #e1e4e8;
+    border-radius: 24px;
+    outline: none;
+    font-size: 15px;
+    transition: border 0.2s ease;
+}
+
+#inputMessaggio:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Area inviti */
+.divInvito {
+    background-color: #f5f7fb;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.divInvito h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 5px;
+}
+
+.divInvito p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+/* Stile Button */
+button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Stile varianti pulsanti */
+.divInvito button {
+    margin: 5px 10px 0 0;
+    padding: 8px 15px;
+    font-size: 13px;
+}
+
+button.accetta {
+    background-color: #10b981;
+}
+
+button.accetta:hover {
+    background-color: #059669;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+button.rifiuta {
+    background-color: #ef4444;
+}
+
+button.rifiuta:hover {
+    background-color: #dc2626;
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Area del pulsante invita */
+#divButton {
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e1e4e8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#divButton select {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: border 0.2s ease;
+    background-color: #fff;
+}
+
+#divButton select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #e1e4e8;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Intestazioni */
+h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Sezioni con intestazioni */
+#divGruppi::before, #divInviti::before {
+    content: attr(data-title);
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #4f46e5;
+    padding-bottom: 10px;
+}
+
+#divGruppi::before {
+    content: "I tuoi gruppi";
+}
+
+#divInviti::before {
+    content: "Inviti";
+}
+
+/* Responsive design */
+@media screen and (max-width: 1024px) {
+    body {
+        flex-direction: column;
+    }
+
+    #divGruppi, #divInviti {
+        width: 100%;
+        height: auto;
+        max-height: 30vh;
+        border-right: none;
+        border-left: none;
+    }
+
+    #divGruppi {
+        order: 1;
+        border-bottom: 1px solid #e1e4e8;
+    }
+
+    #divChat {
+        order: 2;
+        height: auto;
+        flex: 1;
+    }
+
+    #divInviti {
+        order: 3;
+        border-top: 1px solid #e1e4e8;
+    }
+    
+    #divMessaggi > div {
+        max-width: 85%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #divGruppi {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .divGruppo {
+        min-width: 120px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    #divButton button, #divInterfaccia button {
+        padding: 10px 15px;
+    }
+}

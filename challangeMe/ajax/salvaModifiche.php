@@ -3,7 +3,10 @@
     require_once "../Classi/Utente.php";
     require_once "../Classi/GestoreDB.php";
 
-    $vettoreRitorno = [];
+    $pathIniziale = "../Immagini/";
+    $vettoreRitorno = null;
+    
+
     if(!isset($_SESSION))
         session_start();
 
@@ -14,31 +17,65 @@
         print(json_encode($vettoreRitorno));
         return;
     }
-
-    if(!isset($_GET["pathFotoProfilo"]) || !isset($_GET["descrizione"]))
-    {
-        $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Parametri non validi";
-        print(json_encode($vettoreRitorno));
-        return;
-    }
-    $pathFotoProfilo = $_GET["pathFotoProfilo"];
-    $descrizione = $_GET["descrizione"];
     $utenteCorrente = $_SESSION["utenteCorrente"];
     $gestoreDB = GestoreDB::getInstance();
-    $result = $gestoreDB->modificaProfilo($utenteCorrente->getUsername(), $pathFotoProfilo, $descrizione);
 
-    if($result)
+    if(isset($_POST["descrizione"]) && !empty($_POST["descrizione"]))
     {
-        $vettoreRitorno["status"] = "OK";
-        $vettoreRitorno["msg"] = "Modifica avvenuta con successo";
+        $descrizione = $_POST["descrizione"];
+        $result = $gestoreDB->modificaDescrizioneProfilo($utenteCorrente->getUsername(), $descrizione);
+        if($result) 
+        {
+            $vettoreRitorno["status"] = "OK";
+            $vettoreRitorno["msg"] = "Modifica avvenuta con successo";
+        } 
+        else 
+        {
+            $vettoreRitorno["status"] = "ERR";
+            $vettoreRitorno["msg"] = "Modifica non avvenuta";
+        }
     }
-    else
+
+    if (isset($_FILES["pathFoto"])) 
     {
-        $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Modifica non avvenuta";
+        $nomeFoto = $_FILES["pathFoto"]["name"];
+        $pathFinale = $pathIniziale . $nomeFoto;
+
+        if (!is_dir($pathIniziale)) {
+            mkdir($pathIniziale, 0777, true); // Crea la cartella se non esiste
+        }
+
+        if (move_uploaded_file($_FILES["pathFoto"]["tmp_name"], $pathFinale)) {
+            $oldPathFoto = $gestoreDB->getAllUsernameInfo($utenteCorrente->getUsername())["pathFotoProfilo"];
+            $result = $gestoreDB->modificaPathFotoProfilo($utenteCorrente->getUsername(), "Immagini/" . $nomeFoto);
+            if ($oldPathFoto != null && !empty($oldPathFoto) && $result)
+            {
+                if (file_exists($oldPathFoto)) {
+                    unlink($oldPathFoto); // Elimina la foto precedente se esiste
+                }
+                $vettoreRitorno["status"] = "OK";
+                $vettoreRitorno["msg"] = "Modifica avvenuta con successo";
+            }
+            else
+            {
+                $vettoreRitorno["status"] = "ERR";
+                $vettoreRitorno["msg"] = "Modifica non avvenuta";
+            }
+            print(json_encode($vettoreRitorno));
+            return;
+        } else {
+            $vettoreRitorno["status"] = "ERR";
+            $vettoreRitorno["msg"] = "Caricamento fallito";
+            print(json_encode($vettoreRitorno));
+            return;
+        }
     }
-    print(json_encode($vettoreRitorno));
+
+    print_r(json_encode($vettoreRitorno));
     return;
+
+
+
+
 
 ?>

@@ -1,11 +1,11 @@
 <?php
 
-    require_once "../Classi/Utente.php";
-    require_once "../Classi/GestoreDB.php";
-    $vettoreRitorno = null;
+    require_once("../Classi/GestoreDB.php");
+    require_once("../Classi/Utente.php");
 
+    $vettoreRitorno = null;
     if(!isset($_SESSION))
-        session_start();   
+        session_start();
 
     if(!isset($_SESSION["utenteCorrente"]))
     {
@@ -15,7 +15,7 @@
         return;
     }
 
-    if(!isset($_GET["idSfida"]) || empty($_GET["idSfida"]))
+    if(!isset($_GET["idGruppo"]))
     {
         $vettoreRitorno["status"] = "ERR";
         $vettoreRitorno["msg"] = "Parametri non validi";
@@ -23,19 +23,21 @@
         return;
     }
 
-    $idSfida = $_GET["idSfida"];
-    $utenteCorrente = $_SESSION["utenteCorrente"];
+    $idGruppo = $_GET["idGruppo"];
     $gestoreDB = GestoreDB::getInstance();
-    $result = $gestoreDB->completaSfida($idSfida, $utenteCorrente->getUsername());
+    $utenteCorrente = $_SESSION["utenteCorrente"];
+    $username = $utenteCorrente->getUsername();
+
+    $result = $gestoreDB->eliminaInvito($username, $idGruppo);
     if($result)
     {
         $vettoreRitorno["status"] = "OK";
-        $vettoreRitorno["msg"] = "Sfida completata con successo";
+        $vettoreRitorno["msg"] = "Invito rifiutato con successo";
     }
     else
     {
         $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Sfida non completata";
+        $vettoreRitorno["msg"] = "Errore durante il rifiuto dell'invito";
     }
     print(json_encode($vettoreRitorno));
     return;

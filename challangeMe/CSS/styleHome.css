@@ -1,70 +1,390 @@
-#divTop
-{
-    background-color: #FF0000;
-    color: #FFFFFF;
-    text-align: center;
-    padding: 10px;
-    font-size: 20px;
-    width: 100%;
-    height: 10%;
+/* StyleHome.css - Challenge App */
+
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #1cc88a;
+    --danger-color: #e74a3b;
+    --warning-color: #f6c23e;
+    --dark-color: #5a5c69;
+    --light-color: #f8f9fc;
+    --border-radius: 0.35rem;
+    --box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    --transition: all 0.3s ease-in-out;
 }
 
-#superDiv
-{
-    height: 100%;
-    width: 100%;
+body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fc;
+    color: #5a5c69;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
+}
+
+/* Layout */
+#superDiv {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-fluid {
+    padding: 1.5rem;
+}
+
+/* User Ranking */
+#divTop {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    box-shadow: var(--box-shadow);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    min-width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition);
+}
+
+.user-item.user-slide-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.user-item[data-position="1"] {
+    background-color: rgba(255, 215, 0, 0.3);
+    border: 2px solid gold;
+}
+
+.user-item[data-position="2"] {
+    background-color: rgba(192, 192, 192, 0.3);
+    border: 2px solid silver;
+}
+
+.user-item[data-position="3"] {
+    background-color: rgba(205, 127, 50, 0.3);
+    border: 2px solid #cd7f32;
+}
+
+.icona {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.user-score {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Challenge Cards */
+#divCorpo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+    #divCorpo {
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas: 
+            "challenges users"
+            "accepted users";
+    }
+    
+    #divSfide {
+        grid-area: challenges;
+    }
+    
+    #divSuggeritiSeguiti {
+        grid-area: users;
+    }
+    
+    #divSfideAccettate {
+        grid-area: accepted;
+    }
+}
+
+#divSfide, #divSfideAccettate, #divSuggeritiSeguiti {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+#divBottoni, #divBottoniSfide {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
 }
 
-html{
-    height: 100%;
-    width: 100%;
-    margin: 0;
-
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-body{
-    height: 98%;
-    width: 98%;
-    padding: 4px 10px;
+button:hover {
+    background-color: #375bc8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button i {
+    font-size: 1rem;
+}
+
+#divBottoniSfide button:nth-child(1) {
+    background-color: var(--secondary-color);
+}
+
+#divBottoniSfide button:nth-child(1):hover {
+    background-color: #18a978;
+}
+
+#divBottoniSfide button:nth-child(3) {
+    background-color: var(--warning-color);
+}
+
+#divBottoniSfide button:nth-child(3):hover {
+    background-color: #e0b130;
+}
+
+#divUtenti > div, #sottoDivSfide > div, #divSfideAccettate > div {
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+#divUtenti > div:hover, #sottoDivSfide > div:hover, #divSfideAccettate > div:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.challenge-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.challenge-dates {
+    color: var(--dark-color);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.challenge-completion {
+    margin-top: 0.5rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.challenge-card.completed {
+    position: relative;
+}
+
+.challenge-card.completed::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(28, 200, 138, 0.07);
+    border-left: 4px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    z-index: 0;
+}
+
+/* Buttons for challenge actions */
+#divSfideAccettate button[value], #sottoDivSfide button[value] {
+    padding: 0.4rem 0.8rem;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#divSfideAccettate button:nth-child(1) {
+    background-color: var(--secondary-color);
+}
+
+#divSfideAccettate button:nth-child(1):hover {
+    background-color: #18a978;
+}
+
+#divSfideAccettate button:nth-child(2) {
+    background-color: var(--danger-color);
+}
+
+#divSfideAccettate button:nth-child(2):hover {
+    background-color: #d13b2c;
+}
+
+/* Animations */
+.user-bounce {
+    animation: bounce 0.5s ease;
+}
+
+.user-pulse {
+    animation: pulse 1.5s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    background-color: var(--dark-color);
+    color: white;
+    padding: 2rem 0;
+}
+
+.footer-content {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
-  
-#divCorpo
-{
-    width: 100%;
-    height: 70%;
-    background-color: blue;
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+/* Logout button */
+#divLogout {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+#divLogout button {
+    background-color: var(--danger-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 0.6rem 1.2rem;
+}
+
+#divLogout button:hover {
+    background-color: #d13b2c;
+}
+
+#divLogout a {
+    color: white;
+    text-decoration: none;
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-#divSfideAccettate
-{
-    width: 30%;
-    height: 100%;
-    background-color: green;
+#divLogout a::before {
+    content: '\F62B'; /* Bootstrap icon for logout */
+    font-family: "bootstrap-icons";
 }
 
-#divSfide
-{
-    width: 40%;
-    height: 100%;
-    background-color: yellow;
+/* Alert styling */
+.alert {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-#divSuggeritiSeguiti
-{
-    width: 30%;
-    height: 100%;
-    background-color: orange;
+.alert-info {
+    background-color: rgba(78, 115, 223, 0.1);
+    border-left: 4px solid var(--primary-color);
+    color: var(--primary-color);
 }
 
-#sottoDivSfide
-{
-    width: 100%;
-    height: 100%;
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    #divTop {
+        padding: 1rem;
+    }
+    
+    .user-item {
+        min-width: 120px;
+        padding: 0.4rem 0.75rem;
+    }
+    
+    .icona {
+        width: 30px;
+        height: 30px;
+    }
+    
+    #divCorpo {
+        padding: 1rem;
+    }
+    
+    #divSfide, #divSfideAccettate, #divSuggeritiSeguiti {
+        padding: 1rem;
+    }
 }

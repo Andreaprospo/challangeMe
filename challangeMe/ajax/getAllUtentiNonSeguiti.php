@@ -23,11 +23,12 @@
     {
         $vettoreRitorno["status"] = "ERR";
         $vettoreRitorno["msg"] = "Nessun utente trovato";
-        print(json_encode($vettoreRitorno));
-        return;
     }
-    $vettoreRitorno["status"] = "OK";
-    $vettoreRitorno["data"] = $result;
+    else
+    {
+        $vettoreRitorno["status"] = "OK";
+        $vettoreRitorno["data"] = $result;
+    }
     print(json_encode($vettoreRitorno));
     return;
 ?>

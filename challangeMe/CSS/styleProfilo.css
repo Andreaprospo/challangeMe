@@ -1,4 +1,4 @@
-/* Main styles for the profile page */
+/* Reset CSS */
 * {
     margin: 0;
     padding: 0;
@@ -7,191 +7,253 @@
 }
 
 body {
-    background-color: #f5f7fa;
+    background-color: #f5f5f5;
     color: #333;
     line-height: 1.6;
 }
 
+/* Main container */
 #superDiv {
-    max-width: 1000px;
-    margin: 30px auto;
+    max-width: 900px;
+    margin: 20px auto;
     padding: 20px;
     background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto auto auto;
-    grid-gap: 20px;
-    grid-template-areas:
-        "foto info"
-        "punteggio punteggio"
-        "sfide sfide"
-        "modifica modifica";
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Profile picture section */
+/* Profile photo section */
 #divfoto {
-    grid-area: foto;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px;
+    margin-bottom: 20px;
 }
 
-#divfoto img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
+#imgProfilo {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    border: 5px solid #3498db;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    object-fit: cover;
+    border: 3px solid #3498db;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
 }
 
-#divfoto img:hover {
+#imgProfilo:hover {
     transform: scale(1.05);
 }
 
 /* User information section */
 #divInformazioni {
-    grid-area: info;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 #divUsername {
-    font-size: 2.5rem;
+    font-size: 28px;
     font-weight: bold;
     color: #2c3e50;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #divDescrizione {
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.6;
-    background-color: #f1f8fe;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #3498db;
+    font-size: 16px;
+    color: #7f8c8d;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 /* Score section */
 #divPunteggio {
-    grid-area: punteggio;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
     text-align: center;
-    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-size: 20px;
     font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #e67e22;
 }
 
 /* Challenges section */
 #divSfide {
-    grid-area: sfide;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
 }
 
 #divSfideAccettate, #divSfideCompletate {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 300px;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
 #divSfideAccettate h2, #divSfideCompletate h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
+    text-align: center;
+    color: #3498db;
     margin-bottom: 15px;
-    font-size: 1.5rem;
+    font-size: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
 }
 
 #sottoDivSfideAccettate div, #sottoDivSfideCompletate div {
-    padding: 12px;
-    margin-bottom: 10px;
-    background-color: #f1f8fe;
-    border-radius: 8px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
 }
 
 #sottoDivSfideAccettate div:hover, #sottoDivSfideCompletate div:hover {
-    background-color: #e3f2fd;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Edit profile section */
+/* Profile modification section */
 #divModificaProfilo {
-    grid-area: modifica;
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
 #divModificaProfilo h2 {
-    color: #2c3e50;
+    color: #3498db;
     margin-bottom: 15px;
+    font-size: 20px;
 }
 
-#buttonModifica {
+#buttonModifica, #buttonSalva {
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 1rem;
-    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-#buttonModifica:hover {
+#buttonModifica:hover, #buttonSalva:hover {
     background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
 }
 
-#buttonModifica:active {
-    transform: translateY(1px);
+/* Form elements for editing */
+/* Input fields and labels for editing */
+.form-group {
+    margin: 15px 0;
+    text-align: left;
 }
 
-/* Responsive design */
+.form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+#inputDescrizione {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+#inputDescrizione:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Custom file input styling */
+.file-input-container {
+    position: relative;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.file-input-label:hover {
+    background-color: #2980b9;
+}
+
+#inputFoto {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+.file-name-display {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+/* Buttons container */
+.edit-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Cancel button */
+#buttonAnnulla {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#buttonAnnulla:hover {
+    background-color: #c0392b;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    #superDiv {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "foto"
-            "info"
-            "punteggio"
-            "sfide"
-            "modifica";
-    }
-
     #divSfide {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
+    
+    #divSfideAccettate, #divSfideCompletate {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    #superDiv {
+        margin: 10px;
+        padding: 15px;
+    }
+}
 
-    #divfoto img {
-        width: 150px;
-        height: 150px;
-    }
-
-    #divUsername {
-        font-size: 2rem;
-        text-align: center;
-    }
+/* Footer styling */
+footer {
+    margin-top: 30px;
+    text-align: center;
+    padding: 15px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
 }

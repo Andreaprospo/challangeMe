@@ -41,8 +41,6 @@
                 return null; // Login failed
             }
         }
-        
-
         function login($identificativo, $password)
         {
             $password = md5($password);
@@ -60,7 +58,6 @@
                 return false; // Login failed
             }
         }   
-    
         function registrati($username, $password, $email)
         {
             $this->createUtente($username, $password, $email);
@@ -74,18 +71,27 @@
                 return "Registrazione fallita"; // Registration failed
             }
         }
-
-        private function createProfilo($username)
+        function createSfida($username, $descrizione, $dataInizio, $oraInizio, $dataFine, $oraFine, $pathFoto, $punteggio)
         {
-            $stmt = $this->db->prepare("INSERT INTO profili (username) VALUES (?)");
-            $stmt->bind_param("s", $username);
+            $stmt = $this->db->prepare("INSERT INTO sfide (usernameUtenteCreatore, descrizione, dataInizio, oraInizio, dataFine, oraFine, pathFotoRicompensa, punteggioRicompensa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssss", $username, $descrizione, $dataInizio, $oraInizio, $dataFine, $oraFine, $pathFoto, $punteggio);
             if ($stmt->execute()) {
                 return true; // Registration successful
             } else {
                 return false; // Registration failed
             }
         }
-
+        private function createProfilo($username)
+        {
+            $pathFotoProfilo = "Immagini/default.png";
+            $stmt = $this->db->prepare("INSERT INTO profili (username, pathFotoProfilo) VALUES (?, ?)");
+            $stmt->bind_param("ss", $username, $pathFotoProfilo);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
         private function createUtente($username, $password, $email)  
         {
             //deve creare anche un profilo oltre all'utente 
@@ -119,7 +125,6 @@
                 }
             }
         }
-
         function getUtenteFromMail($mail)
         {
             $stmt = $this->db->prepare("SELECT * FROM utenti WHERE mail = ?");
@@ -132,7 +137,6 @@
                 return false; // Login failed
             }
         }
-
         function getUtenteFromUsername($username)
         {
             $stmt = $this->db->prepare("SELECT * FROM utenti WHERE username = ?");
@@ -145,7 +149,6 @@
                 return false; // Login failed
             }
         }
-
         function getAllNuoveSfide($username)
         {
             $stmt = $this->db->prepare("SELECT *
@@ -166,7 +169,6 @@
                 return null; // Login failed
             }
         }
-
         function accettaSfida($username, $idSfida)
         {
             $stmt = $this->db->prepare("INSERT INTO accettare_sfide (usernameUtente, idSfida) VALUES (?, ?)");
@@ -177,7 +179,6 @@
                 return false; // Registration failed
             }
         }
-
         function getSfida($idSfida)
         {
             $stmt = $this->db->prepare("SELECT * FROM sfide WHERE id = ?");
@@ -190,7 +191,6 @@
                 return null; // Login failed
             }
         }
-
         function getSfideAccettate($username)
         {
             $stmt = $this->db->prepare("SELECT sfide.*
@@ -212,7 +212,6 @@
                 return null; // Login failed
             }
         }
-
         function getAllSeguiti($username)
         {
             $stmt = $this->db->prepare(query: "SELECT usernameSeguito username FROM seguire
@@ -226,7 +225,6 @@
                 return null; // Login failed
             }
         }   
-
         function getAllUtentiNonSeguiti($username)
         {
             $stmt = $this->db->prepare("SELECT *
@@ -247,7 +245,6 @@
                 return null; // Login failed
             }
         }
-
         function segui($usernameSeguito, $usernameSeguente)
         {
             $stmt = $this->db->prepare("INSERT INTO seguire (usernameSeguito, usernameSeguente) VALUES (?, ?)");
@@ -258,7 +255,6 @@
                 return false; // Registration failed
             }
         }
-
         function smettiDiSeguire($usernameSeguito, $usernameSeguente)
         {
             $stmt = $this->db->prepare("DELETE FROM seguire WHERE usernameSeguito = ? AND usernameSeguente = ?");
@@ -269,7 +265,6 @@
                 return false; // Registration failed
             }
         }
-
         function eliminaSfida($idSfida, $username)
         {
             $stmt = $this->db->prepare("DELETE FROM accettare_sfide WHERE idSfida = ? AND usernameUtente = ?");
@@ -280,8 +275,7 @@
                 return false; // Registration failed
             }
         }
-
-        function completaSfida($idSfida, $username)
+        private function aggiungiTraguardo($idSfida, $username)
         {
             $stmt = $this->db->prepare("INSERT INTO traguardi (idSfida, usernameVincitore, ora, data) VALUES (?, ?, ?, ?)");
             $ora = date("H:i:s");
@@ -293,7 +287,31 @@
                 return false; // Registration failed
             }
         }
-
+        public function addPunteggio($idSfida, $username)
+        {
+            $stmt = $this->db->prepare("SELECT punteggioRicompensa punteggio FROM sfide WHERE id = ?");
+            $stmt->bind_param("i", $idSfida);
+            $result = $stmt->execute();
+            $punteggio = $stmt->get_result()->fetch_assoc()["punteggio"];
+            $stmt = $this->db->prepare("UPDATE profili SET punteggio = punteggio + ? WHERE username = ?");
+            $stmt->bind_param("is", $punteggio, $username);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function completaSfida($idSfida, $username)
+        {
+            if($this->aggiungiTraguardo($idSfida, $username) && $this->addPunteggio($idSfida, $username))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         function getAllSfideCompletate($username)
         {
             $stmt = $this->db->prepare("SELECT *, traguardi.data dataCompletamento, traguardi.ora oraCompletamento
@@ -310,7 +328,6 @@
                 return null; // Login failed
             }
         }
-
         function getAllUsernameInfo($username)
         {
             $stmt = $this->db->prepare("SELECT 
@@ -329,11 +346,165 @@
                 return null; // Login failed
             }
         }
-
         function modificaProfilo($username, $pathFotoProfilo, $descrizione)
         {
             $stmt = $this->db->prepare("UPDATE profili SET pathFotoProfilo = ?, descrizione = ? WHERE username = ?");
             $stmt->bind_param("sss", $pathFotoProfilo, $descrizione, $username);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function modificaDescrizioneProfilo($username, $descrizione)
+        {
+            $stmt = $this->db->prepare("UPDATE profili SET descrizione = ? WHERE username = ?");
+            $stmt->bind_param("ss", $descrizione, $username);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function modificaPathFotoProfilo($username, $pathFotoProfilo)
+        {
+            $stmt = $this->db->prepare("UPDATE profili SET pathFotoProfilo = ? WHERE username = ?");
+            $stmt->bind_param("ss", $pathFotoProfilo, $username);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function getUtentiPunteggioMaggiore($numeroTop)
+        {
+            $stmt = $this->db->prepare("SELECT username, punteggio, pathFotoProfilo FROM profili ORDER BY punteggio DESC LIMIT ?");
+            $stmt->bind_param("i", $numeroTop);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return $result->fetch_all(MYSQLI_ASSOC); // Login successful
+            } else {
+                return null; // Login failed
+            }
+        }
+        function getAllGruppi($username)
+        {
+            $stmt = $this->db->prepare("SELECT *
+            FROM gruppi
+            WHERE id IN (
+                SELECT idGruppo
+                FROM partecipazioni_gruppi
+                WHERE usernameUtente = ?
+            )
+            ;
+            ");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $gruppi = [];
+            while ($row = $result->fetch_assoc()) {
+                $gruppi[] = $row;
+            }   
+            return $gruppi;
+        }
+        function getAllMessaggi($idGruppo)
+        {
+            $stmt = $this->db->prepare("SELECT *
+            FROM messaggi
+            WHERE idGruppo = ?
+            ;
+            ");
+            $stmt->bind_param("i", $idGruppo);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $messaggi = [];
+            while ($row = $result->fetch_assoc()) {
+                $messaggi[] = $row;
+            }   
+            return $messaggi;
+        }
+        function salvaMessaggio($idGruppo, $username, $messaggio)
+        {
+            $data = date("Y-m-d");
+            $ora = date("H:i:s");
+            $stmt = $this->db->prepare("INSERT INTO messaggi (testo, data,  ora, idGruppo, usernameUtente) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssis", $messaggio, $data, $ora, $idGruppo, $username);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function getAllInviti($username)
+        {
+            $stmt = $this->db->prepare("SELECT gruppi.nome nomeGruppo, usernameUtenteInvitante, gruppi.id idGruppo
+            FROM inviti_gruppo
+            JOIN gruppi ON inviti_gruppo.idGruppo = gruppi.id
+            WHERE usernameUtenteInvitato = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $inviti = [];
+            while ($row = $result->fetch_assoc()) {
+                $inviti[] = $row;
+            }
+            return $inviti;
+        }
+        function eliminaInvito($username, $idGruppo)
+        {
+            $stmt = $this->db->prepare("DELETE FROM inviti_gruppo WHERE usernameUtenteInvitato = ? AND idGruppo = ?");
+            $stmt->bind_param("si", $username, $idGruppo);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function accettaInvito($username, $idGruppo)
+        {
+            $stmt = $this->db->prepare("INSERT INTO partecipazioni_gruppi (usernameUtente, idGruppo) VALUES (?, ?)");
+            $stmt->bind_param("si", $username, $idGruppo);
+            if ($stmt->execute()) {
+                if($this->eliminaInvito($username, $idGruppo))
+                    return true; // Registration successful
+                return false; // Registration failed
+            } else {
+                return false; // Registration failed
+            }
+        }
+        function getAllUtentiNonPartecipanti($idGruppo)
+        {
+            $stmt = $this->db->prepare("SELECT *
+            FROM utenti
+            WHERE username NOT IN (
+                SELECT usernameUtente
+                FROM partecipazioni_gruppi
+                WHERE idGruppo = ?
+            )
+            AND username NOT IN (
+                SELECT usernameUtenteInvitato
+                FROM inviti_gruppo
+                WHERE idGruppo = ?
+            )
+            ;
+            ");
+            $stmt->bind_param("ii", $idGruppo, $idGruppo);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $utenti = [];
+            while ($row = $result->fetch_assoc()) {
+                $utenti[] = $row;
+            }   
+            return $utenti;
+        }
+        function invitaUtente($idGruppo, $usernameInvitante, $usernameInvitato)
+        {
+            $stmt = $this->db->prepare("INSERT INTO inviti_gruppo (usernameUtenteInvitato, idGruppo, usernameUtenteInvitante) VALUES (?, ?, ?)");
+            $stmt->bind_param("sis", $usernameInvitato, $idGruppo, $usernameInvitante);
             if ($stmt->execute()) {
                 return true; // Registration successful
             } else {

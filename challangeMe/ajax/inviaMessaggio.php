@@ -1,11 +1,11 @@
 <?php
 
-    require_once "../Classi/Utente.php";
-    require_once "../Classi/GestoreDB.php";
-    $vettoreRitorno = null;
+    require_once("../Classi/GestoreDB.php");
+    require_once("../Classi/Utente.php");
 
+    $vettoreRitorno = null;
     if(!isset($_SESSION))
-        session_start();   
+        session_start();
 
     if(!isset($_SESSION["utenteCorrente"]))
     {
@@ -15,7 +15,7 @@
         return;
     }
 
-    if(!isset($_GET["idSfida"]) || empty($_GET["idSfida"]))
+    if(!isset($_GET["idGruppo"], $_GET["messaggio"]))
     {
         $vettoreRitorno["status"] = "ERR";
         $vettoreRitorno["msg"] = "Parametri non validi";
@@ -23,20 +23,23 @@
         return;
     }
 
-    $idSfida = $_GET["idSfida"];
+    $idGruppo = $_GET["idGruppo"];
+    $messaggio = $_GET["messaggio"];
     $utenteCorrente = $_SESSION["utenteCorrente"];
+    $username = $utenteCorrente->getUsername();
     $gestoreDB = GestoreDB::getInstance();
-    $result = $gestoreDB->completaSfida($idSfida, $utenteCorrente->getUsername());
+    $result = $gestoreDB->salvaMessaggio($idGruppo,$username, $messaggio);
     if($result)
     {
         $vettoreRitorno["status"] = "OK";
-        $vettoreRitorno["msg"] = "Sfida completata con successo";
+        $vettoreRitorno["msg"] = "Messaggio inviato";
     }
     else
     {
         $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Sfida non completata";
+        $vettoreRitorno["msg"] = "Errore durante il salvataggio del messaggio";
     }
     print(json_encode($vettoreRitorno));
     return;
+
 ?>

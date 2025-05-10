@@ -5,7 +5,7 @@
     $vettoreRitorno = null;
 
     if(!isset($_SESSION))
-        session_start();   
+        session_start();  
 
     if(!isset($_SESSION["utenteCorrente"]))
     {
@@ -15,28 +15,31 @@
         return;
     }
 
-    if(!isset($_GET["idSfida"]) || empty($_GET["idSfida"]))
+    if(!isset($_GET["numeroUtenti"]) || empty($_GET["numeroUtenti"]))
     {
         $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Parametri non validi";
+        $vettoreRitorno["msg"] = "Parametro top non valido";
         print(json_encode($vettoreRitorno));
         return;
     }
 
-    $idSfida = $_GET["idSfida"];
+    $numeroUtenti = $_GET["numeroUtenti"];
     $utenteCorrente = $_SESSION["utenteCorrente"];
     $gestoreDB = GestoreDB::getInstance();
-    $result = $gestoreDB->completaSfida($idSfida, $utenteCorrente->getUsername());
+    $result = $gestoreDB->getUtentiPunteggioMaggiore($numeroUtenti);
+
     if($result)
     {
         $vettoreRitorno["status"] = "OK";
-        $vettoreRitorno["msg"] = "Sfida completata con successo";
+        $vettoreRitorno["msg"] = "Utenti trovati";
+        $vettoreRitorno["data"] = $result;
     }
     else
     {
         $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Sfida non completata";
+        $vettoreRitorno["msg"] = "Nessun utente";
     }
     print(json_encode($vettoreRitorno));
     return;
+
 ?>
