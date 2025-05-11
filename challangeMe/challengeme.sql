@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 11, 2025 alle 18:52
+-- Creato il: Mag 11, 2025 alle 22:13
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -39,6 +39,10 @@ CREATE TABLE `accettare_sfide` (
 INSERT INTO `accettare_sfide` (`usernameUtente`, `idSfida`) VALUES
 ('mario', 29),
 ('mirko', 9),
+('paolo', 29),
+('raffy', 29),
+('raffy', 30),
+('raffy', 31),
 ('samuel', 29);
 
 -- --------------------------------------------------------
@@ -106,7 +110,9 @@ INSERT INTO `messaggi` (`id`, `testo`, `data`, `ora`, `idGruppo`, `usernameUtent
 (1, 'fdsfasdfad', '2025-05-10', '17:40:31', 1, 'mirko'),
 (2, 'Ciao claudio', '2025-05-10', '18:00:08', 1, 'mirko'),
 (3, 'fdsfasd', '2025-05-10', '18:48:06', 2, 'mirko'),
-(4, 'Ciao sono mario', '2025-05-10', '18:54:16', 2, 'mario');
+(4, 'Ciao sono mario', '2025-05-10', '18:54:16', 2, 'mario'),
+(5, 'Ciao mirko', '2025-05-11', '20:50:23', 2, 'mario'),
+(6, 'Hey', '2025-05-11', '20:50:35', 2, 'mario');
 
 -- --------------------------------------------------------
 
@@ -149,6 +155,8 @@ CREATE TABLE `profili` (
 INSERT INTO `profili` (`username`, `descrizione`, `pathFotoProfilo`, `punteggio`) VALUES
 ('mario', '', 'Immagini/default.png', 100),
 ('mirko', 'Ciao belli!!', 'Immagini/Raptor.jpg', 2000),
+('paolo', '', 'Immagini/default.png', 100),
+('raffy', '', 'Immagini/default.png', 600),
 ('samuel', 'Ciao', 'Immagini/Raptor.jpg', 100);
 
 -- --------------------------------------------------------
@@ -168,7 +176,9 @@ CREATE TABLE `seguire` (
 
 INSERT INTO `seguire` (`usernameSeguito`, `usernameSeguente`) VALUES
 ('mirko', 'mario'),
-('samuel', 'mario');
+('mirko', 'raffy'),
+('samuel', 'mario'),
+('samuel', 'raffy');
 
 -- --------------------------------------------------------
 
@@ -193,8 +203,10 @@ CREATE TABLE `sfide` (
 --
 
 INSERT INTO `sfide` (`id`, `descrizione`, `dataInizio`, `oraInizio`, `dataFine`, `oraFine`, `pathFotoRicompensa`, `punteggioRicompensa`, `usernameUtenteCreatore`) VALUES
-(9, 'Toccati il gomito', '2025-04-17', '00:00:00', '2025-04-30', '00:00:00', 'f', 1000, 'mirko'),
-(29, 'Saluta Luca', '2025-05-11', '11:22:00', '2025-05-12', '11:22:00', 'https://images.unsplash.com/photo-1517833971739-54eb158e481f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzI2NzF8MHwxfHNlYXJjaHwxfHxTYWx1dGElMjBMdWNhfGVufDB8fHx8MTc0Njk1NTM4Mnww&ixlib=rb-4.1.0&q=80&w=1080', 100, 'mario');
+(9, 'Toccati il gomito', '2025-04-17', '00:00:00', '2025-04-30', '00:00:00', 'https://plus.unsplash.com/premium_photo-1745338250505-e1226b993ecc?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 1000, 'mirko'),
+(29, 'Saluta Luca', '2025-05-11', '11:22:00', '2025-05-12', '11:22:00', 'https://images.unsplash.com/photo-1517833971739-54eb158e481f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzI2NzF8MHwxfHNlYXJjaHwxfHxTYWx1dGElMjBMdWNhfGVufDB8fHx8MTc0Njk1NTM4Mnww&ixlib=rb-4.1.0&q=80&w=1080', 100, 'mario'),
+(30, 'abbraccia papà', '2025-05-11', '22:00:00', '2025-05-11', '23:59:00', 'https://images.unsplash.com/photo-1603786462825-f91dc68f094e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzI2NzF8MHwxfHNlYXJjaHwxfHxhYmJyYWNjaWElMjBwYXAlQzMlQTB8ZW58MHx8fHwxNzQ2OTkzMzYyfDA&ixlib=rb-4.1.0&q=80&w=1080', 500, 'raffy'),
+(31, 'Ciao', '2025-05-11', '23:00:00', '2025-05-12', '03:09:00', 'https://images.unsplash.com/photo-1601520525445-1039c1fa232b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MzI2NzF8MHwxfHNlYXJjaHwxfHxDaWFvfGVufDB8fHx8MTc0Njk5Mzg2OHww&ixlib=rb-4.1.0&q=80&w=1080', 22222, 'raffy');
 
 -- --------------------------------------------------------
 
@@ -216,6 +228,9 @@ CREATE TABLE `traguardi` (
 INSERT INTO `traguardi` (`usernameVincitore`, `idSfida`, `ora`, `data`) VALUES
 ('mario', 29, '11:23:37', '2025-05-11'),
 ('mirko', 9, '17:55:01', '2025-04-28'),
+('paolo', 29, '21:14:50', '2025-05-11'),
+('raffy', 29, '21:54:40', '2025-05-11'),
+('raffy', 30, '21:56:13', '2025-05-11'),
 ('samuel', 29, '14:08:06', '2025-05-11');
 
 -- --------------------------------------------------------
@@ -237,6 +252,8 @@ CREATE TABLE `utenti` (
 INSERT INTO `utenti` (`username`, `password`, `mail`) VALUES
 ('mario', 'de2f15d014d40b93578d255e6221fd60', 'mario'),
 ('mirko', '13592f2caf86af30572a825229a2a8dc', 'mirko'),
+('paolo', '969044ea4df948fb0392308cfff9cdce', 'paolo@gmail.com'),
+('raffy', '78af6eb6c614955db6518002b2d6bfe8', 'raffy@gmail.com'),
 ('samuel', 'd8ae5776067290c4712fa454006c8ec6', 'samuel');
 
 --
@@ -327,13 +344,13 @@ ALTER TABLE `gruppi`
 -- AUTO_INCREMENT per la tabella `messaggi`
 --
 ALTER TABLE `messaggi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT per la tabella `sfide`
 --
 ALTER TABLE `sfide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Limiti per le tabelle scaricate
