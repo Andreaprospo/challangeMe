@@ -1,195 +1,105 @@
-/* Reset CSS */
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --secondary-color: #16a085;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --light-text: #ecf0f1;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --hover-transition: all 0.3s ease;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #f0f2f5;
     line-height: 1.6;
-}
-
-/* Main container */
-#superDiv {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Profile photo section */
-#divfoto {
+    color: var(--dark-text);
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin-bottom: 20px;
+    align-items: center;
+    padding: 20px;
 }
 
-#imgProfilo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #3498db;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-}
-
-#imgProfilo:hover {
-    transform: scale(1.05);
-}
-
-/* User information section */
-#divInformazioni {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-#divUsername {
-    font-size: 28px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-#divDescrizione {
-    font-size: 16px;
-    color: #7f8c8d;
-    max-width: 600px;
+#superDiv {
+    width: 100%;
+    max-width: 900px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
     margin: 0 auto;
-    padding: 0 15px;
-}
-
-/* Score section */
-#divPunteggio {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #e67e22;
-}
-
-/* Challenges section */
-#divSfide {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 30px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+        "foto info info"
+        "punteggio punteggio punteggio"
+        "sfide sfide sfide"
+        "modifica modifica modifica"
+        "logout logout logout";
     gap: 20px;
 }
 
-#divSfideAccettate, #divSfideCompletate {
-    flex: 1;
-    min-width: 300px;
-    border-radius: 8px;
+/* Foto Profilo */
+#divfoto {
+    grid-area: foto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 15px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
-#divSfideAccettate h2, #divSfideCompletate h2 {
-    text-align: center;
-    color: #3498db;
-    margin-bottom: 15px;
-    font-size: 20px;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 8px;
-}
-
-#sottoDivSfideAccettate div, #sottoDivSfideCompletate div {
-    padding: 10px;
-    margin-bottom: 8px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
-}
-
-#sottoDivSfideAccettate div:hover, #sottoDivSfideCompletate div:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Profile modification section */
-#divModificaProfilo {
-    text-align: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-}
-
-#divModificaProfilo h2 {
-    color: #3498db;
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-#buttonModifica, #buttonSalva {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-#buttonModifica:hover, #buttonSalva:hover {
-    background-color: #2980b9;
-}
-
-/* Form elements for editing */
-/* Input fields and labels for editing */
-.form-group {
-    margin: 15px 0;
-    text-align: left;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: bold;
-    color: #2c3e50;
-    font-size: 14px;
-}
-
-#inputDescrizione {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s;
-}
-
-#inputDescrizione:focus {
-    border-color: #3498db;
-    outline: none;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-}
-
-/* Custom file input styling */
-.file-input-container {
+#divfoto > div {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--accent-color);
     position: relative;
-    margin: 15px 0;
-    text-align: center;
+}
+
+#imgProfilo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-input-container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .file-input-label {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #3498db;
+    background-color: var(--accent-color);
     color: white;
-    border-radius: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 14px;
+    transition: var(--hover-transition);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 .file-input-label:hover {
@@ -197,63 +107,281 @@ body {
 }
 
 #inputFoto {
-    position: absolute;
-    left: -9999px;
-    opacity: 0;
+    display: none;
 }
 
 .file-name-display {
-    margin-top: 8px;
-    font-size: 12px;
-    color: #7f8c8d;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+    margin-top: 5px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* Buttons container */
+/* Informazioni utente */
+#divInformazioni {
+    grid-area: info;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#divUsername {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+#divDescrizione {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+#inputDescrizione {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    resize: vertical;
+    min-height: 100px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+    color: var(--primary-color);
+}
+
+/* Punteggio */
+#divPunteggio {
+    grid-area: punteggio;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+/* Sfide */
+#divSfide {
+    grid-area: sfide;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#divSfideAccettate, #divSfideCompletate {
+    background-color: white;
+    border-radius: var(--border-radius);
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+}
+
+#divSfideAccettate > div:first-child, #divSfideCompletate > div:first-child {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 15px;
+}
+
+#divSfideAccettate h2, #divSfideCompletate h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#sottoDivSfideAccettate, #sottoDivSfideCompletate {
+    padding: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#sottoDivSfideAccettate > div, #sottoDivSfideCompletate > div {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+#sottoDivSfideAccettate > div:last-child, #sottoDivSfideCompletate > div:last-child {
+    border-bottom: none;
+}
+
+.imgSfida {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+/* Modifica profilo */
+#divModificaProfilo {
+    grid-area: modifica;
+    padding: 15px;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+#divModificaProfilo h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+#buttonModifica {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--hover-transition);
+}
+
+#buttonModifica:hover {
+    background-color: #1abc9c;
+    transform: translateY(-2px);
+}
+
 .edit-buttons-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
     margin-top: 15px;
 }
 
-/* Cancel button */
+#buttonSalva {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--hover-transition);
+}
+
+#buttonSalva:hover {
+    background-color: #27ae60;
+}
+
 #buttonAnnulla {
     background-color: #e74c3c;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    font-weight: 500;
+    transition: var(--hover-transition);
 }
 
 #buttonAnnulla:hover {
     background-color: #c0392b;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    #divSfide {
-        flex-direction: column;
-    }
-    
-    #divSfideAccettate, #divSfideCompletate {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    
-    #superDiv {
-        margin: 10px;
-        padding: 15px;
-    }
+/* Logout */
+#divLogout {
+    grid-area: logout;
+    padding: 15px;
+    text-align: center;
 }
 
-/* Footer styling */
+#divLogout button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--hover-transition);
+}
+
+#divLogout button:hover {
+    background-color: #c0392b;
+}
+
+#divLogout a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+}
+
+/* Footer */
 footer {
-    margin-top: 30px;
+    margin-top: 40px;
+    width: 100%;
     text-align: center;
     padding: 15px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    font-size: 14px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c9d6;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8b2c1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #superDiv {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "foto"
+            "info"
+            "punteggio"
+            "sfide"
+            "modifica"
+            "logout";
+    }
+
+    #divfoto > div {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+
+    #divUsername {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    #divDescrizione {
+        text-align: center;
+    }
 }

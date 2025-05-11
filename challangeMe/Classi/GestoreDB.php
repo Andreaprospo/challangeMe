@@ -511,6 +511,57 @@
                 return false; // Registration failed
             }
         }
-    }
+        function creaGruppo($nomeGruppo, $username)
+        {
+            $data = date("Y-m-d");
+            $stmt = $this->db->prepare("INSERT INTO gruppi (nome,data, usernameUtenteCreatore) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $nomeGruppo, $data, $username);
+            if ($stmt->execute()) {
+                $idGruppo = $this->db->insert_id;
+                if($this->createPartecipazioneGruppo($username, $idGruppo))
+                    return true; // Registration successful
+                return false; // Registration failed
+            } else {
+                return false; // Registration failed
+            }
+        }
 
+        function createPartecipazioneGruppo($username, $idGruppo)
+        {
+            $stmt = $this->db->prepare("INSERT INTO partecipazioni_gruppi (usernameUtente, idGruppo) VALUES (?, ?)");
+            $stmt->bind_param("si", $username, $idGruppo);
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return false; // Registration failed
+            }
+        }
+
+        function checkIfUsernameExist($idGruppo)
+        {
+            $stmt = $this->db->prepare("SELECT * FROM utenti WHERE username = ?");
+            $stmt->bind_param("s", $idGruppo);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return true; // Login successful
+            } else {
+                return false; // Login failed
+            }
+        }
+
+        function checkIfIsSubscribed($username, $usernameCorrente)
+        {
+            $stmt = $this->db->prepare("SELECT * FROM seguire WHERE usernameSeguito = ? AND usernameSeguente = ?");
+            $stmt->bind_param("ss", $username, $usernameCorrente);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                return true; // Login successful
+            } else {
+                return false; // Login failed
+            }
+        }
+
+    }
 ?>

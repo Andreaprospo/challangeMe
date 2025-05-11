@@ -1,0 +1,134 @@
+/* Main Styles */
+body {
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.registration-container {
+    max-width: 450px;
+    width: 100%;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.registration-container:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Header Styles */
+.registration-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registration-header h2 {
+    color: #0d6efd;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Form Controls */
+.form-floating {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Form Controls Additional Styling */
+.form-floating:last-of-type {
+    margin-bottom: 25px;
+}
+
+/* Button Styles */
+.registration-btn {
+    width: 100%;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.registration-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+}
+
+.registration-btn:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Links and Additional Info */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #6c757d;
+}
+
+.login-link a {
+    color: #0d6efd;
+    font-weight: 500;
+}
+
+.login-link a:hover {
+    text-decoration: underline !important;
+}
+
+/* Validation Styling */
+.form-control.is-valid, 
+.form-control.is-invalid {
+    background-position: right calc(0.375em + 1.1875rem) center;
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+    20%, 40%, 60%, 80% {transform: translateX(5px);}
+}
+
+.shake {
+    animation: shake 0.6s;
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+    .registration-container {
+        max-width: 100%;
+        border-radius: 0;
+        padding: 20px;
+        box-shadow: none;
+    }
+    
+    body {
+        background-color: white;
+    }
+}
+
+/* Form transitions */
+.form-control {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.alert {
+    transition: opacity 0.5s ease;
+}
+
+.alert.fade {
+    opacity: 0;
+}
+
+/* Additional Bootstrap enhancements */
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}

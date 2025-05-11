@@ -15,17 +15,16 @@
         return;
     }
 
-    //        let url = "ajax/creaSfida.php?descrizione=" + descrizione + "&dataInizio=" + dataInizio + "&oraInizio=" + oraInizio + "&dataFine=" + dataFine + "&oraFine=" + oraFine + "&pathFoto=" + pathFoto + "&punteggio=" + punteggio;
-
-
     if(!isset($_GET["descrizione"], $_GET["dataInizio"], $_GET["oraInizio"], $_GET["dataFine"], $_GET["oraFine"], $_GET["pathFoto"], $_GET["punteggio"]) 
-    || empty($_GET["descrizione"]) || empty($_GET["dataInizio"]) || empty($_GET["oraInizio"]) || empty($_GET["dataFine"]) || empty($_GET["oraFine"]) || empty($_GET["pathFoto"]) || empty($_GET["punteggio"]))
+       || empty($_GET["descrizione"]) || empty($_GET["dataInizio"]) || empty($_GET["oraInizio"]) || empty($_GET["dataFine"]) || empty($_GET["oraFine"]) || empty($_GET["pathFoto"]) || empty($_GET["punteggio"])
+       || $_GET["dataInizio"] == "null" || $_GET["oraInizio"] == "null" || $_GET["dataFine"] == "null" || $_GET["oraFine"] == "null" || $_GET["pathFoto"] == "null" || $_GET["punteggio"] == "null")
     {
         $vettoreRitorno["status"] = "ERR";
         $vettoreRitorno["msg"] = "Parametri non validi";
         print(json_encode($vettoreRitorno));
         return;
     }
+
 
     $descrizione = $_GET["descrizione"];
     $dataInizio = $_GET["dataInizio"];

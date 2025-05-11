@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/styleProfilo.css">
-    <title>Document</title>
+    <link rel="icon" type="image/png" href="icona.png">
+    <title>Profilo</title>
 </head>
 
 <body>
@@ -51,17 +52,58 @@
 
 </html>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    stampaSfideAccettate();
-    stampaSfideCompletate();
-    stampaAllInfo();
+    document.addEventListener("DOMContentLoaded",async function () {
+    let username = "<?php
+        require_once("Classi/Utente.php");
+        require_once("Classi/GestoreDB.php");
+        if(!isset($_SESSION))
+            session_start();
+
+        if(isset($_GET["username"]))
+            echo $_GET["username"];
+        else
+            echo $_SESSION["utenteCorrente"]->getUsername();
+    ?>"
+    let usernameCorrente = "<?php
+        require_once("Classi/Utente.php");
+        require_once("Classi/GestoreDB.php");
+        if(!isset($_SESSION))
+            session_start();
+        if(isset($_SESSION["utenteCorrente"]))
+            echo $_SESSION["utenteCorrente"]->getUsername();
+    ?>";
+    if(username != usernameCorrente)
+    {
+        let divModificaProfilo = document.querySelector("#divModificaProfilo");
+        divModificaProfilo.style.display = "none";
+        let exist = await checkIfUsernameExist(username);
+        let subscribe = await checkIfIsSubscribed(username);
+        if(!exist)
+        {
+            alert("L'utente non esiste");
+            window.location.href = "home.php";
+        }
+        if(!subscribe)
+        {
+            alert("Non sei iscritto a questo profilo");
+            window.location.href = "home.php";
+        }
+    }
+
+    stampaSfideAccettate(username);
+    stampaSfideCompletate(username);
+    stampaAllInfo(username);
 });
 
-async function stampaAllInfo() {
-    let url = "ajax/getAllUsernameInfo.php";
+async function stampaAllInfo(username) {
+
+    let url = "ajax/getAllUsernameInfo.php?username=" + username;
+    console.log(url);
     let response = await fetch(url);
     let txt = await response.text();
+    console.log(txt);
     let data = JSON.parse(txt);
+    console.log(data);
     let divFoto = document.querySelector("#divfoto");
     let img = document.querySelector("#imgProfilo");
     if (data.data.pathFotoProfilo == null || data.data.pathFotoProfilo == "") {
@@ -76,8 +118,8 @@ async function stampaAllInfo() {
     divDescrizione.innerHTML = data.data.descrizione;
 }
 
-async function stampaSfideCompletate() {
-    let url = "ajax/getAllSfideCompletate.php";
+async function stampaSfideCompletate(username) {
+    let url = "ajax/getAllSfideCompletate.php?username=" + username
     let response = await fetch(url);
     let txt = await response.text();
     let data = JSON.parse(txt);
@@ -96,14 +138,19 @@ async function stampaSfideCompletate() {
     }
 }
 
-function stampaSfidaCompletata($data) {
+function stampaSfidaCompletata(data) {
     let div = document.createElement("div");
-    div.innerHTML = $data["descrizione"] + " --- " + $data["data"] + " --- " + $data["ora"] + " --- " + $data["dataCompletamento"] + " --- " + $data["oraCompletamento"];
+    let img = document.createElement("img");
+    img.src = data["pathFotoRicompensa"];
+    img.alt = "Foto sfida";
+    img.className = "imgSfida";
+    div.appendChild(img);
+    div.innerHTML += data["descrizione"] + " --- " + data["data"] + " --- " + data["ora"] + " --- " + data["dataCompletamento"] + " --- " + data["oraCompletamento"];
     return div;
 }
 
-async function stampaSfideAccettate() {
-    let url = "ajax/getAllSfideAccettate.php";
+async function stampaSfideAccettate(username) {
+    let url = "ajax/getAllSfideAccettate.php?username=" + username;
     let response = await fetch(url);
     let txt = await response.text();
     let data = JSON.parse(txt);
@@ -274,4 +321,27 @@ function salvaModifiche() {
         });
 }
 
+async function checkIfUsernameExist(username) {
+    let url = "ajax/checkIfUsernameExist.php?username=" + username;
+    let response = await fetch(url);
+    let txt = await response.text();
+    console.log(txt);
+    let data = JSON.parse(txt);
+    console.log(data);
+    if (data.status == "OK")
+        return true;
+    return false;
+}
+
+async function checkIfIsSubscribed(username) {
+    let url = "ajax/checkIfIsSubscribed.php?username=" + username;
+    let response = await fetch(url);
+    let txt = await response.text();
+    console.log(txt);
+    let data = JSON.parse(txt);
+    console.log(data);
+    if (data.status == "OK")
+        return true;
+    return false;
+}
 </script>

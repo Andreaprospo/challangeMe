@@ -17,25 +17,26 @@
 
     if(!isset($_GET["username"]) || empty($_GET["username"]))
     {
-        $username = $_SESSION["utenteCorrente"]->getUsername();
-    }
-    else
-    {
-        $username = $_GET["username"];
-    }
-    
-    $gestoreDB = GestoreDB::getInstance();
-    $result = $gestoreDB->getAllSfideCompletate($username);
-    if($result == null)
-    {
         $vettoreRitorno["status"] = "ERR";
-        $vettoreRitorno["msg"] = "Nessuna sfida completata trovata";
+        $vettoreRitorno["msg"] = "Parametri non validi";
         print(json_encode($vettoreRitorno));
         return;
     }
-    $vettoreRitorno["status"] = "OK";
-    $vettoreRitorno["data"] = $result;
+
+    $username = $_GET["username"];
+    $gestoreDB = GestoreDB::getInstance();
+    $result = $gestoreDB->checkIfUsernameExist($username);
+    
+    if($result)
+    {
+        $vettoreRitorno["status"] = "OK";
+        $vettoreRitorno["msg"] = "Username esistente";
+    }
+    else
+    {
+        $vettoreRitorno["status"] = "ERR";
+        $vettoreRitorno["msg"] = "Username non esistente";
+    }
     print(json_encode($vettoreRitorno));
     return;
-
 ?>

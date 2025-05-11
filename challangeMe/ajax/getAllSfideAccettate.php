@@ -1,10 +1,12 @@
 <?php
-
     require_once("../Classi/GestoreDB.php");
     require_once("../Classi/Utente.php");
+
+    $vettoreRitorno = null;
+
     if(!isset($_SESSION))
         session_start();
-    $vettoreRitorno = null;
+
     if(!isset($_SESSION["utenteCorrente"]))
     {
         $vettoreRitorno["status"] = "ERR";
@@ -12,10 +14,19 @@
         print(json_encode($vettoreRitorno));
         return;
     }
+
+    if(!isset($_GET["username"]) || empty($_GET["username"]))
+    {
+        $username = $_SESSION["utenteCorrente"]->getUsername();
+    }
+    else
+    {
+        $username = $_GET["username"];
+    }
     
+
     $gestoreDB = GestoreDB::getInstance();
-    $username = $_SESSION["utenteCorrente"]->getUsername();
-    
+
     $sfideAccettate = $gestoreDB->getSfideAccettate($username);
     
     if($sfideAccettate != null)
