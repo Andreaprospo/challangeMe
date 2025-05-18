@@ -1,7 +1,13 @@
+<?php
+    require_once("Classi/Utente.php");
+    require_once("Classi/GestoreDB.php");
+
+    if(!isset($_SESSION))
+        session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/styleProfilo.css">
@@ -56,9 +62,6 @@
     let username = "<?php
         require_once("Classi/Utente.php");
         require_once("Classi/GestoreDB.php");
-        if(!isset($_SESSION))
-            session_start();
-
         if(isset($_GET["username"]))
             echo $_GET["username"];
         else
@@ -67,8 +70,7 @@
     let usernameCorrente = "<?php
         require_once("Classi/Utente.php");
         require_once("Classi/GestoreDB.php");
-        if(!isset($_SESSION))
-            session_start();
+
         if(isset($_SESSION["utenteCorrente"]))
             echo $_SESSION["utenteCorrente"]->getUsername();
     ?>";

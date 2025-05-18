@@ -4,9 +4,9 @@
     {
         private $db;
         private $host = 'localhost';
-        private $user = 'root';
-        private $password = '';
-        private $database = 'challengeMe';
+        private $user = 'uaulumjp_proserpioandrea';
+        private $password = '~VS81uXeUy^6';
+        private $database = 'uaulumjp_challengeMe';
 
         static private $instance = null;
         function __construct()

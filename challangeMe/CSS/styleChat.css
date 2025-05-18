@@ -1,332 +1,515 @@
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+/* Style for Chat application - Modern and responsive design */
+
+/* Import fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 :root {
-  --primary-color: #5c6bc0;
-  --secondary-color: #7986cb;
-  --light-color: #e8eaf6;
-  --dark-color: #3949ab;
-  --success-color: #66bb6a;
-  --danger-color: #ef5350;
-  --text-color: #263238;
-  --light-text: #ffffff;
-  --border-radius: 8px;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --primary-color: #4285f4;
+    --primary-hover: #3367d6;
+    --danger-color: #eb4a46;
 }
 
 body {
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
-  background-color: #f5f7fa;
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fb;
+    color: #333;
+    height: 100vh;
+    overflow: hidden;
+    padding-bottom: 0; /* Will be adjusted for mobile view */
 }
 
 .container-fluid {
-  height: 100%;
-  display: flex;
-  padding: 15px;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
 }
 
-/* Sidebar Styles - Group List */
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c9d6;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8c9cb2;
+}
+
+/* Sidebar styles - Groups */
 #divGruppi {
-  width: 280px;
-  background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  padding: 15px;
-  margin-right: 15px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  max-height: 90vh;
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #e6eaf0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);
+    overflow-y: auto;
+}
+
+#divGruppi h4 {
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .divGruppo {
-  padding: 12px;
-  margin-bottom: 10px;
-  background-color: var(--light-color);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: all 0.2s ease;
+    background-color: #f8fafc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
 }
 
 .divGruppo:hover {
-  background-color: var(--secondary-color);
-  color: var(--light-text);
-  transform: translateY(-2px);
-}
-
-.divGruppo h2 {
-  font-size: 16px;
-  margin: 0;
-  font-weight: 500;
+    background-color: #f0f4fa;
+    border-color: #e2e8f0;
+    transform: translateY(-2px);
 }
 
 .divGruppo.active {
-  background-color: var(--primary-color);
-  color: var(--light-text);
+    background-color: #e7effd;
+    border-color: #c7dbff;
+    border-left: 4px solid #4285f4;
+}
+
+.divGruppo h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #divButtonCreaGruppo {
-  margin-top: auto;
-  padding-top: 15px;
+    margin-top: auto;
+    padding-top: 15px;
 }
 
-#divButtonCreaGruppo button {
-  width: 100%;
-  background-color: var(--dark-color);
-  color: var(--light-text);
-  border: none;
-  padding: 10px;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: background-color 0.2s;
+#divButtonCreaGruppo .btn {
+    background-color: #4285f4;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: none;
 }
 
-#divButtonCreaGruppo button:hover {
-  background-color: var(--primary-color);
+#divButtonCreaGruppo .btn:hover {
+    background-color: #3367d6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.2);
 }
 
-#inputNomeGruppo {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: var(--border-radius);
+#divButtonCreaGruppo .btn-outline-secondary {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #ced4da;
 }
 
-/* Chat Area Styles */
+#divButtonCreaGruppo .btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Chat area */
 #divChat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #ffffff;
 }
 
 #divButton {
-  padding: 10px;
-  background-color: var(--light-color);
-  display: flex;
-  gap: 10px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e6eaf0;
+    padding: 5px;
 }
 
-#divButton button, 
-#divInterfaccia button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: background-color 0.2s;
+#divButton .btn {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: all 0.2s;
 }
 
-#divButton button:hover,
-#divInterfaccia button:hover {
-  background-color: var(--dark-color);
+#divButton .btn:hover {
+    background-color: #3367d6;
 }
 
-#divButton select {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: var(--border-radius);
+#divButton .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.875rem;
 }
 
-/* Message Area */
+/* Messages area */
 #divMessaggi {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: #f9f9f9;
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f9fafc;
+}
+
+#divMessaggi .text-center {
+    color: #8895a7;
+    margin: auto;
+}
+
+#divMessaggi .fas {
+    color: #cbd5e0;
 }
 
 #divMessaggi > div {
-  max-width: 80%;
-  padding: 10px 15px;
-  border-radius: var(--border-radius);
-  background-color: var(--light-color);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  position: relative;
-  align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    position: relative;
+    border-radius: 12px;
+    padding: 12px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    align-self: flex-start;
+    border-top-left-radius: 0;
 }
 
+/* Additional styling for messages to better distinguish current user */
 #divMessaggi > div:nth-child(even) {
-  align-self: flex-end;
-  background-color: var(--primary-color);
-  color: var(--light-text);
+    align-self: flex-end;
+    background-color: #e7effd;
+    border-top-right-radius: 0;
+    border-top-left-radius: 12px;
+}
+
+#divMessaggi > div:nth-child(even) .divMittente {
+    color: #3367d6;
+    text-align: right;
+}
+
+/* Add "read" indicators for messages on the right */
+#divMessaggi > div:nth-child(even)::after {
+    content: "✓✓";
+    font-size: 0.7rem;
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: #8895a7;
 }
 
 .divMittente {
-  font-weight: bold;
-  margin-bottom: 5px;
-  font-size: 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4285f4;
+    margin-bottom: 4px;
 }
 
 .divTesto {
-  word-break: break-word;
+    word-break: break-word;
+    line-height: 1.5;
 }
 
 .divOrario {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 11px;
-  color: rgba(0, 0, 0, 0.5);
-  margin-top: 5px;
+    font-size: 0.7rem;
+    color: #8895a7;
+    align-self: flex-end;
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
 }
 
-#divMessaggi > div:nth-child(even) .divOrario {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.divOrario p {
-  margin: 0 3px;
-}
-
-/* Input Area */
+/* Chat input area */
 #divInterfaccia {
-  padding: 15px;
-  display: flex;
-  gap: 10px;
-  background-color: var(--light-color);
+    padding: 15px;
+    background-color: #ffffff;
+    border-top: 1px solid #e6eaf0;
 }
 
-#inputMessaggio {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: var(--border-radius);
+#divInterfaccia .input-group {
+    background-color: #f5f7fb;
+    border-radius: 25px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
-/* Invitations Area */
+#divInterfaccia input {
+    border: none;
+    background-color: transparent;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+}
+
+#divInterfaccia input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+#divInterfaccia .btn {
+    background-color: #4285f4;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border: none;
+}
+
+#divInterfaccia .btn:hover {
+    background-color: #3367d6;
+    transform: translateY(-2px);
+}
+
+/* Invitations area */
 #divInviti {
-  width: 280px;
-  background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  padding: 15px;
-  margin-left: 15px;
-  overflow-y: auto;
-  max-height: 90vh;
+    background-color: #ffffff;
+    padding: 20px;
+    border-left: 1px solid #e6eaf0;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);
 }
 
-#divInviti h2 {
-  font-size: 18px;
-  margin-top: 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+#divInviti h4 {
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .divInvito {
-  padding: 12px;
-  margin-bottom: 15px;
-  background-color: var(--light-color);
-  border-radius: var(--border-radius);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: #f8fafc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.divInvito:hover {
+    border-color: #c7dbff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .divInvito h2 {
-  font-size: 16px;
-  margin: 0 0 5px 0;
-  border-bottom: none;
-  padding-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4285f4;
+    margin: 0 0 5px 0;
 }
 
 .divInvito p {
-  margin: 0 0 10px 0;
-  color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    color: #64748b;
+}
+
+.divInvito p.fw-bold {
+    color: #2d3748;
 }
 
 .divInvito button {
-  padding: 6px 12px;
-  margin-right: 5px;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.2s;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
 }
 
-.divInvito button:first-of-type {
-  background-color: var(--success-color);
-  color: white;
-}
-
-.divInvito button:last-of-type {
-  background-color: var(--danger-color);
-  color: white;
+.divInvito button:nth-child(2) {
+    background-color: #f3f4f6;
+    color: #64748b;
 }
 
 .divInvito button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
-/* Logout Button */
+.divInvito button:nth-child(1):hover {
+    background-color: #3367d6;
+}
+
+.divInvito button:nth-child(2):hover {
+    background-color: #e5e7eb;
+}
+
+/* Logout button */
 #divLogout {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
+    position: fixed;
+    bottom: 80px; /* Adjusted to be above the footer */
+    left: 20px;
+    z-index: 99; /* Lower than footer */
 }
 
-#divLogout button {
-  background-color: var(--danger-color);
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: background-color 0.2s;
+#divLogout .btn {
+    background-color: transparent;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 15px;
+    transition: all 0.2s;
 }
 
-#divLogout button:hover {
-  background-color: #d32f2f;
+#divLogout .btn:hover {
+    background-color: #f3f4f6;
 }
 
 #divLogout a {
-  color: white;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
-/* Responsive adjustments */
+/* Alerts */
+.alert {
+    border-radius: 8px;
+    font-size: 0.9rem;
+    padding: 12px;
+}
+
+.alert-warning {
+    background-color: #fff8e6;
+    color: #b78105;
+    border: 1px solid #ffeeba;
+}
+
+.alert-info {
+    background-color: #e6f3ff;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Form controls */
+.form-select {
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #c7dbff;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
+    outline: none;
+}
+
+/* Responsive design */
 @media (max-width: 992px) {
-  .container-fluid {
-    flex-direction: column;
-  }
-  
-  #divGruppi, #divInviti {
-    width: 100%;
-    margin: 0 0 15px 0;
-    max-height: unset;
-  }
-  
-  #divChat {
-    height: 60vh;
-  }
-  
-  #divLogout {
-    position: static;
-    margin-top: 15px;
-    text-align: center;
-  }
+    .container-fluid {
+        grid-template-columns: 220px 1fr 220px;
+    }
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) {
+    .container-fluid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto auto;
+        height: auto;
+        min-height: calc(100vh - 66px); /* Subtract footer height */
+        padding-bottom: 66px; /* Add space for footer */
+    }
+    
+    #divGruppi, #divChat, #divInviti {
+        height: auto;
+        max-height: calc(100vh - 66px); /* Adjust for footer */
+        overflow-y: auto;
+    }
+    
+    #divGruppi {
+        grid-row: 2;
+        border-right: none;
+        border-bottom: 1px solid #e6eaf0;
+        padding-bottom: 10px;
+    }
+    
+    #divChat {
+        grid-row: 1;
+        height: 70vh;
+    }
+    
+    #divInviti {
+        grid-row: 3;
+        border-left: none;
+        border-top: 1px solid #e6eaf0;
+        margin-bottom: 70px; /* Space for footer */
+    }
+    
+    #divLogout {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 70px; /* Space for footer */
+    }
+    
+    #divLogout .btn {
+        width: 100%;
+    }
 }
 
-.divGruppo, .divInvito, #divMessaggi > div {
-  animation: fadeIn 0.3s ease-out forwards;
+@media (max-width: 576px) {
+    #divMessaggi > div {
+        max-width: 90%;
+    }
+    
+    .divGruppo h2, .divInvito h2 {
+        font-size: 0.9rem;
+    }
+    
+    #divButton .d-flex {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #divButton .form-select {
+        width: 100%;
+    }
+}
+
+/* Footer integration fixes */
+/* Adjusts container height to account for footer */
+.container-fluid {
+    height: calc(100vh - 66px);
+}
+
+.divCambiaFoto
+{
+  border-radius: 0px 0px 0px 0px;
 }

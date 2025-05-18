@@ -1,387 +1,589 @@
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
-
+/* Modern Profile Page Styles */
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #3498db;
-    --secondary-color: #16a085;
-    --light-bg: #f8f9fa;
-    --dark-text: #2c3e50;
-    --light-text: #ecf0f1;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    --hover-transition: all 0.3s ease;
+  --primary-color: #4e73df;
+  --primary-hover: #2e59d9;
+  --success-color: #1cc88a;
+  --danger-color: #e74a3b;
+  --dark-bg: #1e2a45;
+  --light-bg: #f8f9fc;
+  --border-radius: 0.8rem;
+  --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+  --text-primary: #333;
+  --text-secondary: #6c757d;
+  --card-bg: #fff;
+  --card-border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* Base Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #f0f2f5;
-    line-height: 1.6;
-    color: var(--dark-text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  background-color: var(--light-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: var(--transition);
+  padding: 2rem 1rem;
 }
 
+/* Dark mode styles */
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: #fff;
+}
+
+.dark-mode #superDiv {
+  background-color: #2d3748;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+.dark-mode h2 {
+  color: #e2e8f0;
+}
+
+/* Main container */
 #superDiv {
-    width: 100%;
-    max-width: 900px;
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 30px;
-    margin: 0 auto;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    grid-template-areas:
-        "foto info info"
-        "punteggio punteggio punteggio"
-        "sfide sfide sfide"
-        "modifica modifica modifica"
-        "logout logout logout";
-    gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Foto Profilo */
+@media (min-width: 768px) {
+  #superDiv {
+    grid-template-columns: 300px 1fr;
+    grid-template-areas:
+      "photo info"
+      "score info"
+      "challenges challenges"
+      "edit edit"
+      "logout logout";
+  }
+}
+
+/* Profile photo section */
 #divfoto {
-    grid-area: foto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
+  grid-area: photo;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
 #divfoto > div {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    border: 3px solid var(--accent-color);
-    position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  border: 4px solid var(--primary-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#divfoto > div:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0.6rem 1.8rem rgba(78, 115, 223, 0.25);
 }
 
 #imgProfilo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
 }
 
-.file-input-container {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.file-input-label {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: var(--hover-transition);
-    font-size: 0.9rem;
-    text-align: center;
-    margin-bottom: 8px;
-}
-
-.file-input-label:hover {
-    background-color: #2980b9;
-}
-
-#inputFoto {
-    display: none;
-}
-
-.file-name-display {
-    font-size: 0.8rem;
-    color: #666;
-    text-align: center;
-    margin-top: 5px;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Informazioni utente */
+/* User information */
 #divInformazioni {
-    grid-area: info;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  grid-area: info;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  background-color: rgba(78, 115, 223, 0.05);
+  transition: var(--transition);
 }
 
 #divUsername {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+#divUsername::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 60px;
+  background-color: var(--primary-color);
+  border-radius: 3px;
 }
 
 #divDescrizione {
-    font-size: 16px;
-    color: #666;
-    line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-top: 1rem;
 }
 
-#inputDescrizione {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    resize: vertical;
-    min-height: 100px;
-    font-size: 16px;
-    margin-top: 8px;
-}
-
-.form-label {
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-    color: var(--primary-color);
-}
-
-/* Punteggio */
+/* User score */
 #divPunteggio {
-    grid-area: punteggio;
-    background-color: var(--light-bg);
-    border-radius: var(--border-radius);
-    padding: 15px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--primary-color);
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  grid-area: score;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(28, 200, 138, 0.1);
+  border-radius: var(--border-radius);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--success-color);
+  margin-top: 1rem;
 }
 
-/* Sfide */
+/* Challenges section */
 #divSfide {
-    grid-area: sfide;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  grid-area: challenges;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  #divSfide {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 #divSfideAccettate, #divSfideCompletate {
-    background-color: white;
-    border-radius: var(--border-radius);
-    border: 1px solid #e0e0e0;
-    overflow: hidden;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  border: var(--card-border);
 }
 
-#divSfideAccettate > div:first-child, #divSfideCompletate > div:first-child {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 10px 15px;
+#divSfideAccettate:hover, #divSfideCompletate:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+#divSfideAccettate {
+  border-left: 4px solid var(--primary-color);
+}
+
+#divSfideCompletate {
+  border-left: 4px solid var(--success-color);
 }
 
 #divSfideAccettate h2, #divSfideCompletate h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+}
+
+#divSfideAccettate h2::before {
+  content: "🎯 ";
+  margin-right: 0.5rem;
+}
+
+#divSfideCompletate h2::before {
+  content: "🏆 ";
+  margin-right: 0.5rem;
 }
 
 #sottoDivSfideAccettate, #sottoDivSfideCompletate {
-    padding: 15px;
-    max-height: 200px;
-    overflow-y: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 #sottoDivSfideAccettate > div, #sottoDivSfideCompletate > div {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.8rem;
+  background-color: rgba(78, 115, 223, 0.05);
+  transition: var(--transition);
 }
 
-#sottoDivSfideAccettate > div:last-child, #sottoDivSfideCompletate > div:last-child {
-    border-bottom: none;
+#sottoDivSfideAccettate > div:hover, #sottoDivSfideCompletate > div:hover {
+  background-color: rgba(78, 115, 223, 0.1);
 }
 
 .imgSfida {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    margin-right: 10px;
-    object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  object-fit: cover;
+  vertical-align: middle;
+  border: 2px solid var(--primary-color);
 }
 
-/* Modifica profilo */
+/* Edit profile section */
 #divModificaProfilo {
-    grid-area: modifica;
-    padding: 15px;
-    background-color: var(--light-bg);
-    border-radius: var(--border-radius);
-    text-align: center;
+  grid-area: edit;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  background-color: rgba(78, 115, 223, 0.05);
+  border: var(--card-border);
+  text-align: center;
 }
 
 #divModificaProfilo h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    color: var(--primary-color);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
 }
 
 #buttonModifica {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: 500;
-    transition: var(--hover-transition);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 0.2rem 0.5rem rgba(78, 115, 223, 0.3);
 }
 
 #buttonModifica:hover {
-    background-color: #1abc9c;
-    transform: translateY(-2px);
+  background-color: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 0.4rem 0.8rem rgba(78, 115, 223, 0.4);
+}
+
+#buttonModifica:active {
+  transform: translateY(-1px);
+}
+
+/* Edit form styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+textarea, input[type="text"], input[type="file"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  resize: vertical;
+  transition: var(--transition);
+}
+
+textarea:focus, input[type="text"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.25);
+  outline: none;
+}
+
+.file-input-container {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 600;
+}
+
+.file-input-label:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-name-display {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .edit-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+#buttonSalva, #buttonAnnulla {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 #buttonSalva {
-    background-color: #2ecc71;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: 500;
-    transition: var(--hover-transition);
+  background-color: var(--success-color);
+  color: white;
 }
 
 #buttonSalva:hover {
-    background-color: #27ae60;
+  background-color: #19b97f;
+  transform: translateY(-2px);
 }
 
 #buttonAnnulla {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-weight: 500;
-    transition: var(--hover-transition);
+  background-color: var(--danger-color);
+  color: white;
 }
 
 #buttonAnnulla:hover {
-    background-color: #c0392b;
+  background-color: #d9392a;
+  transform: translateY(-2px);
 }
 
-/* Logout */
+/* Logout section */
 #divLogout {
-    grid-area: logout;
-    padding: 15px;
-    text-align: center;
+  grid-area: logout;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 #divLogout button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    width: 100%;
-    max-width: 200px;
-    padding: 10px 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: var(--hover-transition);
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 #divLogout button:hover {
-    background-color: #c0392b;
+  background-color: #d9392a;
+  transform: translateY(-2px);
+  box-shadow: 0 0.3rem 0.6rem rgba(231, 74, 59, 0.3);
 }
 
 #divLogout a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    display: block;
+  color: white;
+  text-decoration: none;
 }
 
-/* Footer */
-footer {
-    margin-top: 40px;
-    width: 100%;
-    text-align: center;
-    padding: 15px;
-    background-color: var(--primary-color);
-    color: var(--light-text);
-    font-size: 14px;
-}
-
-/* Scrollbar */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c1c9d6;
-    border-radius: 4px;
+  background-color: var(--primary-color);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a8b2c1;
+  background-color: var(--primary-hover);
 }
 
-/* Responsive design */
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Add animations to elements */
+#divUsername, #divDescrizione, #divPunteggio, #divSfideAccettate, #divSfideCompletate {
+  animation: slideIn 0.5s ease-in-out;
+}
+
+#sottoDivSfideAccettate > div, #sottoDivSfideCompletate > div {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    #superDiv {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "foto"
-            "info"
-            "punteggio"
-            "sfide"
-            "modifica"
-            "logout";
-    }
+  #superDiv {
+    padding: 1.5rem;
+  }
+  
+  #divfoto > div {
+    width: 150px;
+    height: 150px;
+  }
+  
+  #divUsername {
+    font-size: 1.8rem;
+  }
+  
+  #buttonModifica, #buttonSalva, #buttonAnnulla, #divLogout button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .edit-buttons-container {
+    flex-direction: column;
+  }
+}
 
-    #divfoto > div {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
-    }
+/* Loading indicators */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
 
-    #divUsername {
-        text-align: center;
-        margin-top: 15px;
-    }
+.loading::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(78, 115, 223, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
 
-    #divDescrizione {
-        text-align: center;
-    }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: var(--success-color);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: toastIn 0.3s forwards, toastOut 0.3s forwards 3s;
+}
+
+.toast.error {
+  background-color: var(--danger-color);
+}
+
+@keyframes toastIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Theme toggle button (optional) */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  z-index: 100;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Badge for points (if needed) */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: 0.5rem;
+}
+
+.badge-success {
+  background-color: var(--success-color);
+}
+
+/* Profile completion indicator (optional) */
+.profile-completion {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.profile-completion-bar {
+  height: 100%;
+  background-color: var(--success-color);
+  width: 70%; /* Adjust based on profile completeness */
+  transition: width 1s ease;
 }

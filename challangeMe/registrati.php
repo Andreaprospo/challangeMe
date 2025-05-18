@@ -61,25 +61,33 @@
         
         <script>
             document.addEventListener("DOMContentLoaded", function() {
+
+                window.addEventListener("keydown", function(event) {
+                    if (event.key == "Enter") {
+                        event.preventDefault();
+                        
+                        // Verifica tutti gli input prima di procedere
+                        let isValid = true;
+                        const inputs = document.querySelectorAll('#registrationForm input[required]');
+                        
+                        inputs.forEach(input => {
+                            if (!validateInput(input)) {
+                                isValid = false;
+                            }
+                        });
+                        
+                        if (isValid) {
+                            checkRegistrati();
+                        }
+                    }
+                });
                 // Form validation setup
                 
                 // Form validation
                 const form = document.getElementById('registrationForm');
                 const inputs = form.querySelectorAll('input[required]');
                 
-                function validateInput(input) {
-                    if (!input.value) {
-                        input.classList.add('is-invalid');
-                        return false;
-                    } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-                        input.classList.add('is-invalid');
-                        return false;
-                    } else {
-                        input.classList.remove('is-invalid');
-                        input.classList.add('is-valid');
-                        return true;
-                    }
-                }
+
                 
                 inputs.forEach(input => {
                     input.addEventListener('blur', () => validateInput(input));
@@ -116,6 +124,10 @@
 
             async function checkRegistrati()
             {
+                if(validateInput() == false) {
+                    return;
+                }
+
                 const registrationBtn = document.querySelector('.registration-btn');
                 const registrationContainer = document.querySelector('.registration-container');
                 
@@ -214,6 +226,20 @@
                     
                     // Add new alert
                     document.getElementById('registrationForm').after(errorAlert);
+                }
+            }
+
+            function validateInput(input) {
+                if (!input.value) {
+                    input.classList.add('is-invalid');
+                    return false;
+                } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+                    input.classList.add('is-invalid');
+                    return false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                    return true;
                 }
             }
         </script>

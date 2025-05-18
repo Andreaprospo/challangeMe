@@ -1,134 +1,239 @@
-/* Main Styles */
+/* Base styles */
+:root {
+  --primary-color: #4e73df;
+  --primary-hover: #2e59d9;
+  --success-color: #1cc88a;
+  --danger-color: #e74a3b;
+  --dark-bg: #333;
+  --light-bg: #f8f9fc;
+  --border-radius: 0.5rem;
+  --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
 body {
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: var(--transition);
 }
 
+/* Dark mode support - can be activated with JavaScript */
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: #fff;
+}
+
+/* Registration container */
 .registration-container {
-    max-width: 450px;
-    width: 100%;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    background-color: white;
-    transition: all 0.3s ease;
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  transition: var(--transition);
 }
 
-.registration-container:hover {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+.dark-mode .registration-container {
+  background-color: #444;
+  color: #fff;
 }
 
-/* Header Styles */
+/* Registration header */
 .registration-header {
-    text-align: center;
-    margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .registration-header h2 {
-    color: #0d6efd;
-    font-weight: 600;
-    margin-bottom: 10px;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
 }
 
-/* Form Controls */
-.form-floating {
-    margin-bottom: 20px;
-    position: relative;
+.dark-mode .registration-header h2 {
+  color: #fff;
 }
 
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+/* Form inputs */
+.form-floating .form-control {
+  border-radius: var(--border-radius);
+  height: 58px;
+  transition: var(--transition);
 }
 
-/* Form Controls Additional Styling */
-.form-floating:last-of-type {
-    margin-bottom: 25px;
+.form-floating .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
 }
 
-/* Button Styles */
+.form-floating label {
+  padding-left: 1rem;
+}
+
+.form-control.is-valid,
+.form-control.is-invalid {
+  background-position: right calc(0.375em + 0.75rem) center;
+}
+
+/* Button styles */
 .registration-btn {
-    width: 100%;
-    padding: 12px;
-    font-weight: 600;
-    font-size: 1rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--border-radius);
+  color: white;
+  font-weight: 600;
+  height: 3rem;
+  transition: var(--transition);
+  width: 100%;
 }
 
 .registration-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
 }
 
-.registration-btn:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+.registration-btn:active {
+  transform: translateY(0);
 }
 
-/* Links and Additional Info */
+.btn-success {
+  background-color: var(--success-color);
+}
+
+/* Login link */
 .login-link {
-    text-align: center;
-    margin-top: 20px;
-    color: #6c757d;
+  margin-top: 1.5rem;
+  text-align: center;
 }
 
 .login-link a {
-    color: #0d6efd;
-    font-weight: 500;
+  color: var(--primary-color);
+  font-weight: 600;
+  transition: var(--transition);
 }
 
 .login-link a:hover {
-    text-decoration: underline !important;
+  color: var(--primary-hover);
+  text-decoration: underline !important;
 }
 
-/* Validation Styling */
-.form-control.is-valid, 
-.form-control.is-invalid {
-    background-position: right calc(0.375em + 1.1875rem) center;
+.dark-mode .login-link a {
+  color: #a9c7ff;
+}
+
+/* Alert styles */
+.alert {
+  border-radius: var(--border-radius);
+  margin-top: 1rem;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.alert.fade {
+  opacity: 0;
 }
 
 /* Animations */
 @keyframes shake {
-    0%, 100% {transform: translateX(0);}
-    10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
-    20%, 40%, 60%, 80% {transform: translateX(5px);}
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
 }
 
 .shake {
-    animation: shake 0.6s;
+  animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 /* Responsive styles */
 @media (max-width: 576px) {
-    .registration-container {
-        max-width: 100%;
-        border-radius: 0;
-        padding: 20px;
-        box-shadow: none;
-    }
-    
-    body {
-        background-color: white;
-    }
+  .registration-container {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: 90%;
+  }
+  
+  .registration-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .form-floating label {
+    font-size: 0.9rem;
+  }
 }
 
-/* Form transitions */
-.form-control {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+/* Password strength indicator */
+.password-strength {
+  height: 5px;
+  margin-top: -1px;
+  margin-bottom: 1rem;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  overflow: hidden;
+  transition: var(--transition);
 }
 
-.alert {
-    transition: opacity 0.5s ease;
+.password-strength-bar {
+  height: 100%;
+  width: 0;
+  background-color: #e74a3b;
+  transition: var(--transition);
 }
 
-.alert.fade {
-    opacity: 0;
+.password-strength-bar.weak {
+  width: 33.33%;
+  background-color: #e74a3b;
 }
 
-/* Additional Bootstrap enhancements */
-.form-check-input:checked {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+.password-strength-bar.medium {
+  width: 66.66%;
+  background-color: #f6c23e;
+}
+
+.password-strength-bar.strong {
+  width: 100%;
+  background-color: #1cc88a;
+}
+
+/* Accessibility improvements */
+input:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 1px;
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) {
+  .form-control, .btn {
+    min-height: 48px; /* Minimum recommended touch target size */
+  }
+}
+
+/* Visual feedback on form interactions */
+.form-control:hover:not(:focus):not(.is-invalid):not(.is-valid) {
+  border-color: #b1b1b1;
+}
+
+.form-control.is-valid {
+  border-color: var(--success-color);
+}
+
+.form-control.is-invalid {
+  border-color: var(--danger-color);
+}
+
+/* Loading spinner styles */
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+  vertical-align: -0.125em;
+}
+
+/* Form group spacing */
+.form-floating {
+  margin-bottom: 1.25rem;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.25);
 }

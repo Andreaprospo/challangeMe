@@ -46,6 +46,15 @@
         
         <script>
             document.addEventListener("DOMContentLoaded", function() {
+
+                window.addEventListener("keydown", function(event) {
+                    if (event.key == "Enter") {
+                        event.preventDefault();
+                        checkLogin();
+
+                    }
+                });
+
                 // Password visibility toggle
                 const togglePassword = document.querySelector('#togglePassword');
                 const password = document.querySelector('#password');
