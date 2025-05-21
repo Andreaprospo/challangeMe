@@ -2,8 +2,14 @@
     require_once("Classi/Utente.php");
     require_once("Classi/GestoreDB.php");
 
-    if(!isset($_SESSION))
+    if (!isset($_SESSION)) {
         session_start();
+    }
+
+    if (!isset($_SESSION["utenteCorrente"])) {
+        header("Location: login.php");
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,7 +114,7 @@ async function stampaAllInfo(username) {
     console.log(data);
     let divFoto = document.querySelector("#divfoto");
     let img = document.querySelector("#imgProfilo");
-    if (data.data.pathFotoProfilo == null || data.data.pathFotoProfilo == "") {
+    if (data.data["pathFotoProfilo"] == null || data.data["pathFotoProfilo"] == "") {
         img.src = "Immagini/default.png";
     } else {
         img.src = data.data.pathFotoProfilo;
@@ -147,7 +153,7 @@ function stampaSfidaCompletata(data) {
     img.alt = "Foto sfida";
     img.className = "imgSfida";
     div.appendChild(img);
-    div.innerHTML += data["descrizione"] + " --- " + data["data"] + " --- " + data["ora"] + " --- " + data["dataCompletamento"] + " --- " + data["oraCompletamento"];
+    div.innerHTML += data["descrizione"] + data["dataCompletamento"] + " --- " + data["oraCompletamento"];
     return div;
 }
 

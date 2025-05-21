@@ -124,7 +124,17 @@
 
             async function checkRegistrati()
             {
-                if(validateInput() == false) {
+                // Verifica tutti gli input prima di procedere
+                let isValid = true;
+                const inputs = document.querySelectorAll('#registrationForm input[required]');
+                
+                inputs.forEach(input => {
+                    if (!validateInput(input)) {
+                        isValid = false;
+                    }
+                });
+                
+                if (!isValid) {
                     return;
                 }
 
@@ -230,6 +240,25 @@
             }
 
             function validateInput(input) {
+                // Se non viene fornito un input specifico, valida tutti gli input e restituisce se sono tutti validi
+                if (!input) {
+                    let allValid = true;
+                    const allInputs = document.querySelectorAll('#registrationForm input[required]');
+                    
+                    allInputs.forEach(inp => {
+                        if (!validateSingleInput(inp)) {
+                            allValid = false;
+                        }
+                    });
+                    
+                    return allValid;
+                }
+                
+                // Altrimenti valida l'input specifico fornito
+                return validateSingleInput(input);
+            }
+            
+            function validateSingleInput(input) {
                 if (!input.value) {
                     input.classList.add('is-invalid');
                     return false;

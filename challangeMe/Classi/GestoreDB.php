@@ -3,10 +3,15 @@
     class GestoreDB
     {
         private $db;
+        // private $host = 'localhost';
+        // private $user = 'uaulumjp_proserpioandrea';
+        // private $password = '~VS81uXeUy^6';
+        // private $database = 'uaulumjp_challengeMe';
+
         private $host = 'localhost';
-        private $user = 'uaulumjp_proserpioandrea';
-        private $password = '~VS81uXeUy^6';
-        private $database = 'uaulumjp_challengeMe';
+        private $user = 'root';
+        private $password = '';
+        private $database = 'challengeMe';
 
         static private $instance = null;
         function __construct()
@@ -278,7 +283,9 @@
         private function aggiungiTraguardo($idSfida, $username)
         {
             $stmt = $this->db->prepare("INSERT INTO traguardi (idSfida, usernameVincitore, ora, data) VALUES (?, ?, ?, ?)");
-            $ora = date("H:i:s");
+            $fusoOrario = 'Europe/Rome';  // Puoi sostituirlo con qualsiasi fuso orario valido
+            $ora = new DateTime("now", new DateTimeZone($fusoOrario));
+            $ora = $ora->format("H:i:s");
             $data = date("Y-m-d");
             $stmt->bind_param("isss", $idSfida, $username, $ora, $data);
             if ($stmt->execute()) {

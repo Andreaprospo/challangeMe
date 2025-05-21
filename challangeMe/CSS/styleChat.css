@@ -1,515 +1,765 @@
-/* Style for Chat application - Modern and responsive design */
-
-/* Import fonts from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-
-/* Global styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Chat Application Styles - styleChat.css */
 
 :root {
-    --primary-color: #4285f4;
-    --primary-hover: #3367d6;
-    --danger-color: #eb4a46;
+  /* Main color scheme - matches footer */
+  --primary-color: #4e73df;
+  --primary-hover: #3a5cd0;
+  --secondary-color: #f8f9fc;
+  --accent-color: #2cdd9b;
+  --danger-color: #e74a3b;
+  --warning-color: #f6c23e;
+  --dark-color: #3a3b45;
+  --light-color: #f8f9fc;
+  --text-color: #5a5c69;
+  --border-color: #e3e6f0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  
+  /* Font sizes */
+  --font-small: 0.85rem;
+  --font-normal: 1rem;
+  --font-medium: 1.1rem;
+  --font-large: 1.25rem;
+  
+  /* Footer height for spacing calculations */
+  --footer-height: 3rem; /* Reduced from 4rem to 3rem */
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', 'Segoe UI', 'Roboto', sans-serif;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f5f7fb;
-    color: #333;
-    height: 100vh;
-    overflow: hidden;
-    padding-bottom: 0; /* Will be adjusted for mobile view */
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding-bottom: calc(var(--footer-height) + 1rem); /* Space for footer */
+  overflow-x: hidden;
+  position: relative;
 }
 
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+input, select {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+}
+
+/* Layout Container */
 .container-fluid {
-    display: grid;
-    grid-template-columns: 250px 1fr 250px;
-    height: 100vh;
-    padding: 0;
-    overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr 1fr;
+  height: calc(100vh - var(--footer-height) - 1rem);
+  overflow: hidden;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #c1c9d6;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #8c9cb2;
-}
-
-/* Sidebar styles - Groups */
+/* Groups Panel */
 #divGruppi {
-    background-color: #ffffff;
-    padding: 20px;
-    border-right: 1px solid #e6eaf0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);
-    overflow-y: auto;
+  background-color: white;
+  border-right: 1px solid var(--border-color);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
 }
 
 #divGruppi h4 {
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: 600;
+  font-size: var(--font-large);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+#divGruppi h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 3px;
+}
+
+#groupsList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  overflow-y: auto;
 }
 
 .divGruppo {
-    background-color: #f8fafc;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
+  background-color: var(--secondary-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px var(--shadow-color);
 }
 
 .divGruppo:hover {
-    background-color: #f0f4fa;
-    border-color: #e2e8f0;
-    transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 .divGruppo.active {
-    background-color: #e7effd;
-    border-color: #c7dbff;
-    border-left: 4px solid #4285f4;
+  background-color: var(--primary-color);
+  color: white;
+  position: relative;
+}
+
+.divGruppo.active h2 {
+  color: white;
+}
+
+.divGruppo.active::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.5rem;
+  height: 50%;
+  background-color: var(--primary-color);
+  border-radius: 0 5px 5px 0;
 }
 
 .divGruppo h2 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  font-size: var(--font-medium);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #divButtonCreaGruppo {
-    margin-top: auto;
-    padding-top: 15px;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
 }
 
-#divButtonCreaGruppo .btn {
-    background-color: #4285f4;
-    color: white;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s;
-    border: none;
-}
-
-#divButtonCreaGruppo .btn:hover {
-    background-color: #3367d6;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.2);
-}
-
-#divButtonCreaGruppo .btn-outline-secondary {
-    background-color: transparent;
-    color: #6c757d;
-    border: 1px solid #ced4da;
-}
-
-#divButtonCreaGruppo .btn-outline-secondary:hover {
-    background-color: #f8f9fa;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Chat area */
+/* Chat Panel */
 #divChat {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+  position: relative; /* For absolute positioned elements */
 }
 
 #divButton {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e6eaf0;
-    padding: 5px;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  z-index: 5;
 }
 
-#divButton .btn {
-    background-color: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
-    transition: all 0.2s;
-}
-
-#divButton .btn:hover {
-    background-color: #3367d6;
-}
-
-#divButton .btn-sm {
-    padding: 4px 8px;
-    font-size: 0.875rem;
-}
-
-/* Messages area */
 #divMessaggi {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background-color: #f9fafc;
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f9fafc;
 }
 
-#divMessaggi .text-center {
-    color: #8895a7;
-    margin: auto;
+#divMessaggi > div.text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #abb1cc;
 }
 
-#divMessaggi .fas {
-    color: #cbd5e0;
+#divMessaggi > div.text-center i {
+  margin-bottom: 1rem;
+  font-size: 3rem;
 }
 
+#divMessaggi > div.text-center p {
+  font-size: var(--font-medium);
+}
+
+#divInterfaccia {
+  padding: 1rem;
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+  position: relative;
+  z-index: 50;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.input-group input {
+  flex: 1;
+}
+
+/* Message Styling */
 #divMessaggi > div {
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    position: relative;
-    border-radius: 12px;
-    padding: 12px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    align-self: flex-start;
-    border-top-left-radius: 0;
+  max-width: 80%;
+  border-radius: 1rem;
+  padding: 1rem;
+  position: relative;
+  background-color: white;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  align-self: flex-start;
+  animation: slideInRight 0.3s ease-out;
 }
 
-/* Additional styling for messages to better distinguish current user */
+@keyframes slideInRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 #divMessaggi > div:nth-child(even) {
-    align-self: flex-end;
-    background-color: #e7effd;
-    border-top-right-radius: 0;
-    border-top-left-radius: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  align-self: flex-end;
+  animation: slideInLeft 0.3s ease-out;
 }
 
-#divMessaggi > div:nth-child(even) .divMittente {
-    color: #3367d6;
-    text-align: right;
-}
-
-/* Add "read" indicators for messages on the right */
-#divMessaggi > div:nth-child(even)::after {
-    content: "✓✓";
-    font-size: 0.7rem;
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
-    color: #8895a7;
+@keyframes slideInLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .divMittente {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #4285f4;
-    margin-bottom: 4px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: var(--font-normal);
+}
+
+#divMessaggi > div:nth-child(even) .divMittente {
+  color: white;
 }
 
 .divTesto {
-    word-break: break-word;
-    line-height: 1.5;
+  line-height: 1.5;
 }
 
 .divOrario {
-    font-size: 0.7rem;
-    color: #8895a7;
-    align-self: flex-end;
-    margin-top: 5px;
-    display: flex;
-    gap: 5px;
+  font-size: var(--font-small);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+  text-align: right;
 }
 
-/* Chat input area */
-#divInterfaccia {
-    padding: 15px;
-    background-color: #ffffff;
-    border-top: 1px solid #e6eaf0;
+#divMessaggi > div:nth-child(even) .divOrario {
+  color: rgba(255, 255, 255, 0.8);
 }
 
-#divInterfaccia .input-group {
-    background-color: #f5f7fb;
-    border-radius: 25px;
-    padding: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
-}
-
-#divInterfaccia input {
-    border: none;
-    background-color: transparent;
-    padding: 10px 15px;
-    font-size: 0.95rem;
-}
-
-#divInterfaccia input:focus {
-    box-shadow: none;
-    outline: none;
-}
-
-#divInterfaccia .btn {
-    background-color: #4285f4;
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    border: none;
-}
-
-#divInterfaccia .btn:hover {
-    background-color: #3367d6;
-    transform: translateY(-2px);
-}
-
-/* Invitations area */
+/* Inviti Panel */
 #divInviti {
-    background-color: #ffffff;
-    padding: 20px;
-    border-left: 1px solid #e6eaf0;
-    height: 100vh;
-    overflow-y: auto;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);
+  background-color: white;
+  border-left: 1px solid var(--border-color);
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+  height: 100%;
 }
 
 #divInviti h4 {
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: 600;
+  font-size: var(--font-large);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+#divInviti h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 3px;
 }
 
 .divInvito {
-    background-color: #f8fafc;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
+  background-color: var(--secondary-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px var(--shadow-color);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .divInvito:hover {
-    border-color: #c7dbff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 .divInvito h2 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #4285f4;
-    margin: 0 0 5px 0;
+  font-size: var(--font-medium);
+  margin: 0 0 0.5rem 0;
 }
 
 .divInvito p {
-    font-size: 0.9rem;
-    margin: 0;
-    color: #64748b;
-}
-
-.divInvito p.fw-bold {
-    color: #2d3748;
+  margin: 0.25rem 0;
+  font-size: var(--font-normal);
 }
 
 .divInvito button {
-    background-color: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 0.875rem;
-    transition: all 0.2s;
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  font-size: var(--font-small);
 }
 
-.divInvito button:nth-child(2) {
-    background-color: #f3f4f6;
-    color: #64748b;
+.divInvito button:first-child {
+  background-color: var(--accent-color);
 }
 
-.divInvito button:hover {
-    transform: translateY(-2px);
+.divInvito button:first-child:hover {
+  background-color: #25c589;
 }
 
-.divInvito button:nth-child(1):hover {
-    background-color: #3367d6;
+.divInvito button:last-child {
+  background-color: var(--danger-color);
 }
 
-.divInvito button:nth-child(2):hover {
-    background-color: #e5e7eb;
+.divInvito button:last-child:hover {
+  background-color: #d6392a;
 }
 
-/* Logout button */
+/* Logout Button */
 #divLogout {
-    position: fixed;
-    bottom: 80px; /* Adjusted to be above the footer */
-    left: 20px;
-    z-index: 99; /* Lower than footer */
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
 }
 
-#divLogout .btn {
-    background-color: transparent;
-    color: #64748b;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 8px 15px;
-    transition: all 0.2s;
+#divLogout button {
+  background-color: transparent;
+  color: var(--primary-color);
+  box-shadow: none;
+  opacity: 0.8;
 }
 
-#divLogout .btn:hover {
-    background-color: #f3f4f6;
+#divLogout button:hover {
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 #divLogout a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Alerts */
+/* Create Group Form */
+#divButtonCreaGruppo .d-flex {
+  display: flex;
+}
+
+#divButtonCreaGruppo .gap-2 {
+  gap: 0.5rem;
+}
+
+#divButtonCreaGruppo .flex-column {
+  flex-direction: column;
+}
+
+#divButtonCreaGruppo .flex-grow-1 {
+  flex-grow: 1;
+}
+
+/* Button Groups */
+.d-flex {
+  display: flex;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+/* Invite Users Interface */
+.d-flex.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.w-100 {
+  width: 100%;
+}
+
 .alert {
-    border-radius: 8px;
-    font-size: 0.9rem;
-    padding: 12px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
 }
 
 .alert-warning {
-    background-color: #fff8e6;
-    color: #b78105;
-    border: 1px solid #ffeeba;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
 }
 
 .alert-info {
-    background-color: #e6f3ff;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
 }
 
-/* Form controls */
-.form-select {
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-    padding: 8px 10px;
-    font-size: 0.9rem;
+.m-2 {
+  margin: 0.5rem;
 }
 
-.form-control {
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-    padding: 10px;
-    font-size: 0.9rem;
+.m-3 {
+  margin: 1rem;
 }
 
-.form-control:focus, .form-select:focus {
-    border-color: #c7dbff;
-    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
-    outline: none;
+/* Empty State Styling */
+.text-center {
+  text-align: center;
 }
 
-/* Responsive design */
+.text-muted {
+  color: #6c757d;
+}
+
+.p-3 {
+  padding: 1rem;
+}
+
+.p-5 {
+  padding: 3rem;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .container-fluid {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
+
 @media (max-width: 992px) {
-    .container-fluid {
-        grid-template-columns: 220px 1fr 220px;
-    }
+  .container-fluid {
+    grid-template-columns: 1fr 1.5fr;
+  }
+
+  #divInviti {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  #divInviti.show {
+    transform: translateX(0);
+    display: block;
+  }
+
+  /* Add a toggle button for invites on smaller screens */
+  #divLogout {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  #divLogout::before {
+    content: '💌';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+  }
+
+  #divLogout::before:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
 }
 
 @media (max-width: 768px) {
-    .container-fluid {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto auto;
-        height: auto;
-        min-height: calc(100vh - 66px); /* Subtract footer height */
-        padding-bottom: 66px; /* Add space for footer */
-    }
-    
-    #divGruppi, #divChat, #divInviti {
-        height: auto;
-        max-height: calc(100vh - 66px); /* Adjust for footer */
-        overflow-y: auto;
-    }
-    
-    #divGruppi {
-        grid-row: 2;
-        border-right: none;
-        border-bottom: 1px solid #e6eaf0;
-        padding-bottom: 10px;
-    }
-    
-    #divChat {
-        grid-row: 1;
-        height: 70vh;
-    }
-    
-    #divInviti {
-        grid-row: 3;
-        border-left: none;
-        border-top: 1px solid #e6eaf0;
-        margin-bottom: 70px; /* Space for footer */
-    }
-    
-    #divLogout {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        padding: 15px;
-        text-align: center;
-        margin-bottom: 70px; /* Space for footer */
-    }
-    
-    #divLogout .btn {
-        width: 100%;
-    }
+  .container-fluid {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: calc(100vh - var(--footer-height) - 1rem);
+  }
+
+  #divGruppi {
+    grid-row: 1;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    height: auto;
+    max-height: 30vh;
+  }
+
+  #divChat {
+    grid-row: 2;
+    height: 70vh;
+  }
+
+  #divMessaggi > div {
+    max-width: 90%;
+  }
+
+  #divLogout {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  #divLogout button {
+    padding: 0.4rem 0.7rem;
+    font-size: var(--font-small);
+  }
+  
+  /* Ensure the input area doesn't get covered by footer */
+  #divInterfaccia {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+  }
 }
 
 @media (max-width: 576px) {
-    #divMessaggi > div {
-        max-width: 90%;
-    }
-    
-    .divGruppo h2, .divInvito h2 {
-        font-size: 0.9rem;
-    }
-    
-    #divButton .d-flex {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    #divButton .form-select {
-        width: 100%;
-    }
+  #divMessaggi {
+    padding: 0.5rem;
+  }
+
+  #divMessaggi > div {
+    padding: 0.75rem;
+    max-width: 95%;
+  }
+
+  .divGruppo {
+    padding: 0.75rem;
+  }
+
+  input, select, button {
+    padding: 0.5rem 0.75rem;
+  }
+
+  #divButton .d-flex {
+    flex-wrap: wrap;
+  }
+  
+  /* Fix the input area */
+  #divInterfaccia {
+    position: sticky;
+    bottom: var(--footer-height); /* Stay above footer */
+    z-index: 60;
+    padding: 0.5rem;
+    margin-bottom: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-group {
+    gap: 0.25rem;
+  }
+  
+  /* Ensure footer doesn't block content */
+  body {
+    padding-bottom: calc(var(--footer-height) + 0.5rem);
+  }
 }
 
-/* Footer integration fixes */
-/* Adjusts container height to account for footer */
-.container-fluid {
-    height: calc(100vh - 66px);
+/* Animation for button clicks */
+@keyframes clickEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.divCambiaFoto
-{
-  border-radius: 0px 0px 0px 0px;
+button:active {
+  animation: clickEffect 0.2s ease;
+}
+
+/* Loading Animation for Data Fetching */
+.loading-dots {
+  display: inline-flex;
+  align-items: center;
+  height: 1em;
+}
+
+.loading-dots::after {
+  content: "...";
+  width: 1.5em;
+  animation: loadingDots 1.5s infinite;
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Font Awesome Integration */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css');
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+/* Footer Styles Override */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  transition: all 0.3s ease;
+  height: var(--footer-height);
+}
+
+/* Override footer styling from external CSS */
+footer div {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.25rem; /* Reduced padding */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.9rem; /* Smaller font size */
+}
+
+/* Add icons to navigation links - make smaller */
+footer a::before {
+  font-size: 1.2rem; /* Reduced from 1.4rem */
+  margin-bottom: 0.2rem; /* Reduced margin */
+  transition: all 0.3s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
 }
